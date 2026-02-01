@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -20,6 +22,15 @@ class Product extends Model
         'preco' => 'decimal:2',
         'quantidade' => 'integer',
     ];
+
+    public function getDisplayPhotoAttribute()
+    {
+        $foto = $this->foto;
+
+        if (!$foto) {
+            return asset('logo.png');
+        }
+    }
 
     public function user()
     {

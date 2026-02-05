@@ -18,6 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/carrinho/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::patch('/carrinho/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/carrinho/{product}', [CartController::class, 'remove'])->name('cart.remove');
+
+    Route::get('/checkout/address', [CheckoutController::class, 'address'])->name('checkout.address');
+    Route::post('/checkout/address', [CheckoutController::class, 'updateAddress'])->name('checkout.address.update');
     Route::post('/checkout', [PagSeguroController::class, 'createCheckout'])->name('checkout.create');
 });
 

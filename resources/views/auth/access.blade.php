@@ -34,7 +34,7 @@
         <div class="relative z-10 mx-auto w-[min(1100px,94vw)] py-10">
             <nav class="flex flex-wrap items-center justify-between gap-4 text-[0.7rem] uppercase tracking-[0.3em] text-white/60">
                 <a class="flex items-center gap-3 text-white" href="/">
-                    <img src="{{ asset('logo.png') }}" alt="LootBay Logo" class="h-12 w-24">
+                    <img src="{{ asset('logo.png') }}" alt="LootBay Logo" class="h-20 w-32">
                 </a>
                 <a class="transition hover:text-white" href="/">Voltar para a home</a>
             </nav>

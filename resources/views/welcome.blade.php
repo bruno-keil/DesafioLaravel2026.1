@@ -19,7 +19,7 @@
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_15%,_rgba(56,211,159,0.25),_transparent_45%)]"></div>
 
         <div class="relative z-10">
-            <x-navbar id="navbar"/>
+            <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mx-auto mt-6 w-[min(1140px,92vw)]">
                 <div class="h-px bg-white/20"></div>

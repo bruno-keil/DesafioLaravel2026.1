@@ -18,7 +18,7 @@
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
         <div class="relative z-10 mx-auto w-[min(1140px,92vw)]">
-            <x-navbar id="navbar"/>
+            <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mt-10 text-sm text-white/60">
                 <a class="text-white/80 hover:text-white" href="/">LootBay</a> / <a class="text-white/80 hover:text-white" href="{{ route('products.index') }}">Produtos</a> / {{ $product->nome }}

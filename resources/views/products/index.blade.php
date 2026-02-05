@@ -18,7 +18,7 @@
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
         <div class="relative z-10 mx-auto w-[min(1140px,92vw)]">
-            <x-navbar id="navbar"/>
+            <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mt-10">
                 <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em]">Anuncios P2P</h1>

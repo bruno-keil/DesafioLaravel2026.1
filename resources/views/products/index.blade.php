@@ -10,7 +10,7 @@
     <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-    @vite(['resources/css/app.css', 'resources/ts/products-index.ts'])
+    @vite(['resources/css/app.css', 'resources/ts/product-index.ts'])
 </head>
 <body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
 

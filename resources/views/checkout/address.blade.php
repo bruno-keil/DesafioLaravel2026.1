@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    @vite(['resources/css/welcome.css'])
+    @vite(['resources/css/welcome.css', 'resources/ts/welcome.ts'])
 </head>
 <body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
     <header class="relative overflow-hidden py-8">

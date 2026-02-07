@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagSeguroController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/meus-produtos', [ProductController::class, 'myProducts'])->name('products.my');
+    Route::get('/produtos/criar', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/produtos', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/produtos/{product}/editar', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/produtos/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/produtos/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('users', UserController::class);
+        Route::resource('admins', AdminController::class);
+        Route::get('products', [ProductController::class, 'adminIndex'])->name('products.index');
+    });
 });
 
 require __DIR__.'/auth.php';

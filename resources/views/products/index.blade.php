@@ -62,7 +62,7 @@
                         <div class="p-4">
                             <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>
                             <div class="mt-2 text-base font-semibold text-white">{{ $product->nome }}</div>
-                            <div class="mt-2 text-sm font-semibold text-emerald-300">R$ {{ number_format((float) $product->preco, 2, ',', '.') }}</div>
+                            <div class="mt-2 text-sm font-semibold text-emerald-300">R$ {{ format_currency($product->preco) }}</div>
                         </div>
                     </a>
                 @empty

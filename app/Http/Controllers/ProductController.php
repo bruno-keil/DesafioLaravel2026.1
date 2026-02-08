@@ -36,8 +36,8 @@ class ProductController extends Controller
         ];
 
         $products->setCollection(
-            $products->getCollection()->values()->map(function ($product, $index) use ($fallbacks) {
-                $product->display_photo = $this->getDisplayPhoto($product, $fallbacks, $index);
+            $products->getCollection()->values()->map(function ($product, $index) {
+                $product->display_photo = get_product_photo($product, $index);
                 return $product;
             })
         );
@@ -62,7 +62,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product->load('category', 'user');
-        $displayPhoto = $this->getDisplayPhoto($product);
+        $displayPhoto = get_product_photo($product);
 
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
@@ -214,16 +214,5 @@ class ProductController extends Controller
 
         $redirectRoute = $user->is_admin ? 'admin.products.index' : 'products.my';
         return redirect()->route($redirectRoute)->with('success', 'Produto excluído com sucesso!');
-    }
-
-    private function getDisplayPhoto($product, $fallbacks = [], $index = 0)
-    {
-        if ($product->foto) {
-            return str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto);
-        }
-        if (!empty($fallbacks)) {
-            return $fallbacks[$index % count($fallbacks)];
-        }
-        return 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80';
     }
 }

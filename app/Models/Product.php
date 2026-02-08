@@ -25,11 +25,7 @@ class Product extends Model
 
     public function getDisplayPhotoAttribute()
     {
-        $foto = $this->foto;
-
-        if (!$foto) {
-            return asset('logo.png');
-        }
+        return get_product_photo($this, $this->id);
     }
 
     public function user()

@@ -28,20 +28,6 @@ class ProductController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        $fallbacks = [
-            'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
-        ];
-
-        $products->setCollection(
-            $products->getCollection()->values()->map(function ($product, $index) {
-                $product->display_photo = get_product_photo($product, $index);
-                return $product;
-            })
-        );
-
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
         $authUserName = $user?->nome ?? $user?->name ?? 'Usuario';

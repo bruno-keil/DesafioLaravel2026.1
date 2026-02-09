@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('usuarios')->unique();
+            $table->foreignId('user_id')->constrained('usuarios')->cascadeOnDelete()->unique();
             $table->string('cep', 8);
             $table->string('logradouro')->nullable();
             $table->string('numero', 20);

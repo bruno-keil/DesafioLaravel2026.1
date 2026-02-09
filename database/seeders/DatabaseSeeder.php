@@ -51,10 +51,16 @@ class DatabaseSeeder extends Seeder
 
         Product::factory()
             ->count(36)
-            ->state(function () use ($sellerIds, $categories) {
+            ->sequence(function ($sequence) use ($sellerIds, $categories) {
+                $monthsAgo = $sequence->index % 12;
+                
+                $date = now()->subMonths($monthsAgo)->subDays(rand(1, 28));
+
                 return [
                     'user_id' => $sellerIds->random(),
                     'categoria_id' => $categories->random()->id,
+                    'created_at' => $date,
+                    'updated_at' => $date,
                 ];
             })
             ->create();

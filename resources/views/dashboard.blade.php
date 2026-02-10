@@ -67,7 +67,6 @@
                     <h3 class="text-lg font-semibold text-white mb-2">{{ $userChart->options['chart_title'] }}</h3>
                     <p class="text-white/50 text-sm mb-6">Seus produtos cadastrados nos últimos 12 meses.</p>
 
-                    {{-- Renderização do Gráfico User --}}
                     <div class="w-full rounded-xl bg-gradient-to-b from-emerald-500/5 to-transparent border border-emerald-500/20 p-4">
                         {!! $userChart->renderHtml() !!}
                     </div>

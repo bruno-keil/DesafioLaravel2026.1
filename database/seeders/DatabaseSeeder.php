@@ -2,67 +2,61 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\TransactionItem;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::factory()->create([
-            'nome' => 'Admin',
-            'email' => 'admin@email.com',
-            'password' => Hash::make('123456789'),
-            'is_admin' => true,
-            'created_by' => null,
+        $this->call([
+            AdminSeeder::class,
+            UserSeeder::class,
+            ProductSeeder::class,
         ]);
 
-        $admin2 = User::factory()->create([
-            'nome' => 'Admin 2',
-            'email' => 'admin2@email.com',
-            'password' => Hash::make('123456789'),
-            'is_admin' => true,
-            'created_by' => $admin->id,
-        ]);
+        $allUsers = User::all();
+        
+        foreach ($allUsers as $user) {
+            $userProducts = Product::where('user_id', $user->id)->get();
+            
+            if ($userProducts->isEmpty()) {
+                continue;
+            }
 
-        $admins = User::factory()
-            ->count(9)
-            ->create([
-                'is_admin' => true,
-                'created_by' => $admin2->id,
-            ]);
+            $salesCount = ($user->email === 'teste@email.com') ? 30 : 10;
 
-        $users = User::factory()
-            ->count(18)
-            ->create([
-                'is_admin' => false,
-                'created_by' => $admin2->id,
-            ]);
-
-        $categories = Category::factory()->count(6)->create();
-
-        $sellerIds = $users->pluck('id');
-        if ($sellerIds->isEmpty()) {
-            $sellerIds = $admins->pluck('id');
-        }
-
-        Product::factory()
-            ->count(36)
-            ->sequence(function ($sequence) use ($sellerIds, $categories) {
-                $monthsAgo = $sequence->index % 12;
+            for ($i = 0; $i < $salesCount; $i++) {
+                $productToSell = $userProducts->random();
                 
-                $date = now()->subMonths($monthsAgo)->subDays(rand(1, 28));
+                $buyer = $allUsers->where('id', '!=', $user->id)->random();
 
-                return [
-                    'user_id' => $sellerIds->random(),
-                    'categoria_id' => $categories->random()->id,
+                $date = now()->subDays(rand(0, 90));
+                
+                $quantity = rand(1, 5);
+                $totalValue = $productToSell->preco * $quantity;
+
+                $transaction = Transaction::create([
+                    'comprador_id' => $buyer->id,
+                    'valor_total' => $totalValue,
+                    'data' => $date,
+                    'status' => 'concluido',
                     'created_at' => $date,
                     'updated_at' => $date,
-                ];
-            })
-            ->create();
+                ]);
+
+                TransactionItem::create([
+                    'transacao_id' => $transaction->id,
+                    'produto_id' => $productToSell->id,
+                    'quantidade' => $quantity,
+                    'valor_unitario' => $productToSell->preco,
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                ]);
+            }
+        }
     }
 }

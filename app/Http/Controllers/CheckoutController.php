@@ -19,7 +19,8 @@ class CheckoutController extends Controller
         $subtotal = collect($items)->sum(fn ($item) => $item['price'] * $item['quantity']);
         $user = auth()->user();
         
-        $address = $user->address;
+        $addresses = $user->addresses()->orderByDesc('is_default')->get();
+        $address = $user->defaultAddress();
 
         $isAuthenticated = true;
         $authUserName = $user->nome;
@@ -29,6 +30,7 @@ class CheckoutController extends Controller
             'subtotal', 
             'user', 
             'address',
+            'addresses',
             'isAuthenticated',
             'authUserName'
         ));
@@ -36,24 +38,13 @@ class CheckoutController extends Controller
 
     public function updateAddress(Request $request)
     {
-        $data = $request->validate([
-            'cep' => 'required|string|size:8',
-            'logradouro' => 'required|string|max:255',
-            'numero' => 'required|string|max:20',
-            'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255',
-            'estado' => 'required|string|max:50',
-            'complemento' => 'nullable|string|max:255',
-            'uf' => 'required|string|size:2',
-        ]);
-
         $user = $request->user();
-        
-        $user->address()->updateOrCreate(
-            ['user_id' => $user->id],
-            $data
-        );
 
-        return redirect()->route('checkout.address')->with('success', 'Endereço atualizado com sucesso!');
+        $selectedAddress = $user->addresses()->findOrFail($request->input('address_id'));
+
+        $user->addresses()->update(['is_default' => false]);
+        $selectedAddress->update(['is_default' => true]);
+
+        return redirect()->route('checkout.address')->with('success', 'Endereço selecionado!');
     }
 }

@@ -1,39 +1,25 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-layouts.lootbay title="LootBay - Dashboard">
+    <x-slot:head>
+        @if(isset($adminChart))
+            {!! $adminChart->renderChartJsLibrary() !!}
+        @elseif(isset($userChart))
+            {!! $userChart->renderChartJsLibrary() !!}
+        @endif
+    </x-slot:head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LootBay - Dashboard</title>
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
-    @vite(['resources/css/welcome.css'])
-
-    @if(isset($adminChart))
-    {!! $adminChart->renderChartJsLibrary() !!}
-    @elseif(isset($userChart))
-    {!! $userChart->renderChartJsLibrary() !!}
-    @endif
-
-</head>
-
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1400&q=80'); opacity: 0.2;"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-[#0a0f16]"></div>
 
         <div class="relative z-10">
-            <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome ?? Auth::user()->name" />
+            <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
 
             <div class="mt-12 mx-auto w-[min(1140px,92vw)]">
                 <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em] text-white">
                     Dashboard
                 </h1>
                 <div class="flex flex-wrap items-center gap-4 mt-2">
-                    <p class="text-white/70 text-lg">Bem-vindo de volta, <span class="text-emerald-400 font-semibold">{{ Auth::user()->nome ?? Auth::user()->name }}</span>.</p>
+                    <p class="text-white/70 text-lg">Bem-vindo de volta, <span class="text-emerald-400 font-semibold">{{ Auth::user()->nome }}</span>.</p>
                     @if(Auth::user()->is_admin)
                     <span class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-wider">Administrador</span>
                     @else
@@ -65,7 +51,7 @@
                         <i class="bi bi-graph-up-arrow text-6xl text-emerald-400"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">{{ $userChart->options['chart_title'] }}</h3>
-                    <p class="text-white/50 text-sm mb-6">Seus produtos cadastrados nos últimos 12 meses.</p>
+                    <p class="text-white/50 text-sm mb-6">Suas vendas realizadas nos últimos 12 meses.</p>
 
                     <div class="w-full rounded-xl bg-gradient-to-b from-emerald-500/5 to-transparent border border-emerald-500/20 p-4">
                         {!! $userChart->renderHtml() !!}
@@ -194,15 +180,44 @@
         </div>
     </section>
 
-    <x-footer />
-    <x-user-modal :auth-user-name="Auth::user()->nome ?? Auth::user()->name" />
+    <x-slot:scripts>
+        @if(isset($adminChart))
+            {!! $adminChart->renderJs() !!}
+        @elseif(isset($userChart))
+            {!! $userChart->renderJs() !!}
+            <script>
+                (function () {
+                    const chartName = @json($userChart->options['chart_name']);
+                    const chart = window[chartName];
 
-    @if(isset($adminChart))
-        {!! $adminChart->renderJs() !!}
-    @elseif(isset($userChart))
-        {!! $userChart->renderJs() !!}
-    @endif
-    
-</body>
+                    if (!chart) {
+                        return;
+                    }
 
-</html>
+                    chart.data.datasets.forEach(function (dataset) {
+                        dataset.pointStyle = 'circle';
+                        dataset.pointRadius = 4;
+                        dataset.pointHoverRadius = 6;
+                    });
+
+                    chart.options.legend = chart.options.legend || {};
+                    chart.options.legend.labels = chart.options.legend.labels || {};
+                    chart.options.legend.labels.usePointStyle = true;
+                    chart.options.legend.labels.boxWidth = 30;
+                    if (window.Chart && Chart.defaults && Chart.defaults.global && Chart.defaults.global.legend && Chart.defaults.global.legend.labels) {
+                        const defaultGenerateLabels = Chart.defaults.global.legend.labels.generateLabels;
+                        chart.options.legend.labels.generateLabels = function (currentChart) {
+                            const labels = defaultGenerateLabels(currentChart);
+                            labels.forEach(function (label) {
+                                label.pointStyle = 'line';
+                            });
+                            return labels;
+                        };
+                    }
+
+                    chart.update();
+                })();
+            </script>
+        @endif
+    </x-slot:scripts>
+</x-layouts.lootbay>

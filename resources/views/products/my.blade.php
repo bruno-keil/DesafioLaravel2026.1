@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LootBay - Meus Produtos</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    @vite(['resources/css/welcome.css'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - Meus Produtos">
     <header class="relative overflow-hidden py-8">
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-[#0a0f16]"></div>
         <div class="relative z-10">
@@ -52,8 +41,7 @@
                             @foreach ($products as $product)
                                 <tr class="hover:bg-white/5 transition">
                                     <td class="px-6 py-4 font-medium text-white flex items-center gap-3">
-                                        <div class="h-10 w-10 rounded bg-cover bg-center shrink-0" 
-                                             style="background-image: url('{{ str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto) }}')"></div>
+                                        <img class="h-10 w-10 rounded object-cover shrink-0" src="{{ str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto) }}" alt="{{ $product->nome }}">
                                         <a href="{{ route('products.show', $product) }}" class="hover:underline">{{ $product->nome }}</a>
                                     </td>
                                     <td class="px-6 py-4">{{ $product->category->nome ?? 'N/A' }}</td>
@@ -85,7 +73,4 @@
             </div>
         </div>
     </section>
-    <x-footer />
-    <x-user-modal :auth-user-name="Auth::user()->nome" />
-</body>
-</html>
+</x-layouts.lootbay>

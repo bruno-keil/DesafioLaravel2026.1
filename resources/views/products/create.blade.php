@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LootBay - Anunciar Produto</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    @vite(['resources/css/welcome.css'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - Anunciar Produto">
     <header class="relative overflow-hidden py-8">
         <div class="relative z-10">
             <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
@@ -85,20 +74,19 @@
             </form>
         </div>
     </section>
-    <x-footer />
-    <x-user-modal :auth-user-name="Auth::user()->nome" />
-    <script>
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
-                    document.getElementById('preview').classList.remove('hidden');
-                    document.getElementById('placeholder').classList.add('hidden');
+    <x-slot:scripts>
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('preview').src = e.target.result;
+                        document.getElementById('preview').classList.remove('hidden');
+                        document.getElementById('placeholder').classList.add('hidden');
+                    }
+                    reader.readAsDataURL(input.files[0]);
                 }
-                reader.readAsDataURL(input.files[0]);
             }
-        }
-    </script>
-</body>
-</html>
+        </script>
+    </x-slot:scripts>
+</x-layouts.lootbay>

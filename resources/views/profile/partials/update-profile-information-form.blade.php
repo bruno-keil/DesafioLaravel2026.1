@@ -19,7 +19,7 @@
 
         <div>
             <label for="nome" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('Nome') }}</label>
-            <input id="nome" name="nome" type="text" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" value="{{ old('nome', $user->nome ?? $user->name) }}" required autofocus autocomplete="name" />
+            <input id="nome" name="nome" type="text" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" value="{{ old('nome', $user->nome) }}" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('nome')" />
         </div>
 

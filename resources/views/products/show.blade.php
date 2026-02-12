@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>LootBay - {{ $product->nome }}</title>
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
-    @vite(['resources/css/app.css', 'resources/ts/product-show.ts'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - {{ $product->nome }}">
+    <x-slot:head>
+        @vite(['resources/ts/product-show.ts'])
+    </x-slot:head>
 
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
@@ -30,7 +19,7 @@
         <div class="mx-auto w-[min(1140px,92vw)]">
             <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
                 <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-                    <div class="aspect-[4/5] w-full bg-cover bg-center" style="background-image: url('{{ $displayPhoto }}');"></div>
+                    <img class="aspect-[4/5] w-full object-cover" src="{{ $displayPhoto }}" alt="{{ $product->nome }}">
                 </div>
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
                     <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>
@@ -70,10 +59,4 @@
         </div>
     </section>
 
-    <x-footer />
-
-    @if ($isAuthenticated)
-        <x-user-modal :auth-user-name="$authUserName" />
-    @endif
-</body>
-</html>
+</x-layouts.lootbay>

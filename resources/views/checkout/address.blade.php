@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LootBay - Endereço de Entrega</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    @vite(['resources/css/welcome.css', 'resources/ts/welcome.ts'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - Endereço de Entrega">
     <header class="relative overflow-hidden py-8">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80'); opacity: 0.3;"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-[#0a0f16]"></div>
@@ -126,7 +115,7 @@
                     <div class="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
                         @foreach($items as $item)
                             <div class="flex items-center gap-3 text-sm">
-                                <div class="h-10 w-10 rounded bg-cover bg-center shrink-0" style="background-image: url('{{ $item['photo'] }}')"></div>
+                                <img class="h-10 w-10 rounded object-cover shrink-0" src="{{ $item['photo'] }}" alt="{{ $item['name'] }}">
                                 <div class="flex-1 min-w-0">
                                     <p class="truncate text-white">{{ $item['name'] }}</p>
                                     <p class="text-white/50 text-xs">{{ $item['quantity'] }}x R$ {{ number_format($item['price'], 2, ',', '.') }}</p>
@@ -153,36 +142,32 @@
         </div>
     </section>
 
-    <x-footer />
-    @if ($isAuthenticated)
-        <x-user-modal :auth-user-name="$authUserName" />
-    @endif
-
-    <script>
-        function toggleAddressForm() {
-            const form = document.getElementById('addressForm');
-            form.classList.toggle('hidden');
-        }
-        document.getElementById('cep').addEventListener('input', function(e) {
-            let cep = e.target.value.replace(/\D/g, '');
-            
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            document.getElementById('logradouro').value = data.logradouro;
-                            document.getElementById('bairro').value = data.bairro;
-                            document.getElementById('cidade').value = data.localidade;
-                            document.getElementById('uf').value = data.uf;
-                            document.getElementById('estado').value = data.uf;
-                            
-                            document.getElementById('numero').focus();
-                        }
-                    })
-                    .catch(error => console.error('Erro ao buscar CEP:', error));
+    <x-slot:scripts>
+        <script>
+            function toggleAddressForm() {
+                const form = document.getElementById('addressForm');
+                form.classList.toggle('hidden');
             }
-        });
-    </script>
-</body>
-</html>
+            document.getElementById('cep').addEventListener('input', function(e) {
+                let cep = e.target.value.replace(/\D/g, '');
+                
+                if (cep.length === 8) {
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                document.getElementById('logradouro').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                                document.getElementById('uf').value = data.uf;
+                                document.getElementById('estado').value = data.uf;
+                                
+                                document.getElementById('numero').focus();
+                            }
+                        })
+                        .catch(error => console.error('Erro ao buscar CEP:', error));
+                }
+            });
+        </script>
+    </x-slot:scripts>
+</x-layouts.lootbay>

@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>LootBay | P2P Marketplace</title>
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
-    @vite(['resources/css/welcome.css', 'resources/ts/welcome.ts'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay | P2P Marketplace">
     <header class="relative min-h-[60vh] py-10 overflow-hidden" data-carousel style="--hero-image: url('{{ $firstSlide['image'] }}');">
         <div class="absolute inset-0 bg-cover bg-center scale-105" style="background-image: var(--hero-image);"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/75 to-black/95"></div>
@@ -55,7 +41,7 @@
             <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse ($products as $product)
                     <a class="group block rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-2 hover:border-emerald-400/50" href="{{ route('products.show', $product) }}">
-                        <div class="aspect-[4/3] w-full rounded-t-2xl bg-cover bg-center" style="background-image: url('{{ $product->display_photo }}');"></div>
+                        <img class="aspect-[4/3] w-full rounded-t-2xl object-cover" src="{{ $product->display_photo }}" alt="{{ $product->nome }}">
                         <div class="p-4">
                             <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>
                             <div class="mt-2 text-base font-semibold text-white">{{ $product->nome }}</div>
@@ -69,12 +55,7 @@
         </div>
     </section>
 
-    <x-footer id="footer" />
-
-    @if ($isAuthenticated)
-        <x-user-modal :auth-user-name="$authUserName" />
-    @endif
-
-    <script type="application/json" id="hero-slides-data">@json($slides)</script>
-</body>
-</html>
+    <x-slot:scripts>
+        <script type="application/json" id="hero-slides-data">@json($slides)</script>
+    </x-slot:scripts>
+</x-layouts.lootbay>

@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>LootBay - Carrinho</title>
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    @vite(['resources/css/welcome.css', 'resources/ts/cart.ts'])
-</head>
-
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - Carrinho">
+    <x-slot:head>
+        @vite(['resources/ts/cart.ts'])
+    </x-slot:head>
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
@@ -50,7 +36,7 @@
                 @foreach ($items as $item)
                 <div class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 md:flex-row md:items-center md:justify-between" data-cart-item data-price="{{ $item['price'] }}" data-max="{{ max(1, (int) $item['stock']) }}">
                     <div class="flex items-center gap-4">
-                        <div class="h-20 w-24 rounded-xl bg-cover bg-center" data-photo="{{ $item['photo'] }}"></div>
+                        <img class="h-20 w-24 rounded-xl object-cover" src="{{ $item['photo'] }}" alt="{{ $item['name'] }}" data-photo>
                         <div>
                             <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $item['category'] }}</div>
                             <div class="mt-1 text-base font-semibold text-white">{{ $item['name'] }}</div>
@@ -91,11 +77,4 @@
         </div>
     </section>
 
-    <x-footer />
-
-    @if ($isAuthenticated)
-    <x-user-modal :auth-user-name="$authUserName" />
-    @endif
-</body>
-
-</html>
+</x-layouts.lootbay>

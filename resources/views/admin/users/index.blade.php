@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LootBay - Gerenciar Usuários</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    @vite(['resources/css/welcome.css'])
-</head>
-<body class="bg-[#0a0f16] text-[#f4f7fb] font-['Manrope']">
+<x-layouts.lootbay title="LootBay - Gerenciar Usuários">
     <header class="relative overflow-hidden py-8">
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-[#0a0f16]"></div>
         <div class="relative z-10">
@@ -81,7 +70,4 @@
             </div>
         </div>
     </section>
-    <x-footer />
-    <x-user-modal :auth-user-name="Auth::user()->nome" />
-</body>
-</html>
+</x-layouts.lootbay>

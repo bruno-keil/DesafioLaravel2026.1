@@ -22,3 +22,7 @@ Para executar o projeto você deve seguir os seguintes passos:
 - execute o comando: ```npm run dev```
 - execute o comando: ```php artisan serve```
 
+## Como executar os testes
+
+Para executar os teste execute o seguinte comando:
+- execute o comando: ```./vendor/bin/pest```

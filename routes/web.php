@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/produtos', [ProductController::class, 'index'])->name('products.index');
-Route::get('/produtos/{product}', [ProductController::class, 'show'])->name('products.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
     Route::post('/carrinho/{product}', [CartController::class, 'add'])->name('cart.add');
@@ -41,11 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/produtos/{product}/editar', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/produtos/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/produtos/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('admins', AdminController::class);
         Route::get('products', [ProductController::class, 'adminIndex'])->name('products.index');
     });
 });
+
+Route::get('/produtos/{product}', [ProductController::class, 'show'])->name('products.show');
 
 require __DIR__.'/auth.php';

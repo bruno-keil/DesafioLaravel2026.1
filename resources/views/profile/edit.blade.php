@@ -31,6 +31,10 @@
                 </div>
             </div>
 
+            <div class="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                @include('profile.partials.manage-addresses-form')
+            </div>
+
             <div class="p-8 rounded-2xl border border-red-500/20 bg-red-500/5 backdrop-blur-sm">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')

@@ -12,10 +12,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $users = User::where('is_admin', false)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -25,18 +21,11 @@ class UserController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
         return view('admin.users.create');
     }
 
     public function store(Request $request)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios',
@@ -82,18 +71,11 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
         return view('admin.users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('usuarios')->ignore($user->id)],
@@ -144,10 +126,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         if ($user->id === auth()->id()) {
             return back()->with('error', 'Você não pode excluir a si mesmo.');
         }

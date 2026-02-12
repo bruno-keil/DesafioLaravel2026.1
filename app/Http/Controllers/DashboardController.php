@@ -27,9 +27,9 @@ class DashboardController extends Controller
             ]);
         } else {
             $userChart = new LaravelChart([
-                'chart_title' => 'Meus Produtos Cadastrados (Mensal)',
+                'chart_title' => 'Vendas Realizadas (Mensal)',
                 'report_type' => 'group_by_date',
-                'model' => 'App\Models\Product',
+                'model' => 'App\Models\Transaction',
                 'group_by_field' => 'created_at',
                 'group_by_period' => 'month',
                 'chart_type' => 'line',
@@ -37,10 +37,10 @@ class DashboardController extends Controller
                 'filter_days' => 365,
                 'conditions' => [
                     [
-                        'name' => 'Meus Produtos',
-                        'condition' => 'user_id = ' . auth()->id(),
+                        'name' => 'Vendas',
+                        'condition' => 'id IN (SELECT transacao_id FROM itens_transacoes JOIN produtos ON itens_transacoes.produto_id = produtos.id WHERE produtos.user_id = ' . auth()->id() . ')',
                         'color' => '#34d399',
-                        'fill' => true,
+                        'fill' => false,
                     ]
                 ]
             ]);

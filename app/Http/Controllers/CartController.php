@@ -15,7 +15,7 @@ class CartController extends Controller
 
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
-        $authUserName = $user?->nome ?? $user?->name ?? 'Usuario';
+        $authUserName = $user?->nome ?? 'Usuario';
         $cartCount = array_sum(array_column($cart, 'quantity'));
 
         return view('cart.index', compact(

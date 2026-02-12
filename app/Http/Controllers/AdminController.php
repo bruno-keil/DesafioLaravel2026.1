@@ -12,10 +12,6 @@ class AdminController extends Controller
 
     public function index()
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $admins = User::where('is_admin', true)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -25,18 +21,11 @@ class AdminController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
         return view('admin.admins.create');
     }
 
     public function store(Request $request)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios',
@@ -82,10 +71,6 @@ class AdminController extends Controller
 
     public function edit(User $admin)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         if ($admin->id !== auth()->id() && $admin->created_by !== auth()->id()) {
             return redirect()->route('admin.admins.index')
                 ->with('error', 'Você só pode editar seu perfil ou administradores criados por você.');
@@ -96,10 +81,6 @@ class AdminController extends Controller
 
     public function update(Request $request, User $admin)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         if ($admin->id !== auth()->id() && $admin->created_by !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
@@ -154,10 +135,6 @@ class AdminController extends Controller
 
     public function destroy(User $admin)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         if ($admin->id !== auth()->id() && $admin->created_by !== auth()->id()) {
             return back()->with('error', 'Você só pode excluir seu perfil ou administradores criados por você.');
         }

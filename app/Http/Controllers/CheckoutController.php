@@ -22,7 +22,7 @@ class CheckoutController extends Controller
         $address = $user->address;
 
         $isAuthenticated = true;
-        $authUserName = $user->nome ?? $user->name;
+        $authUserName = $user->nome;
 
         return view('checkout.address', compact(
             'items', 

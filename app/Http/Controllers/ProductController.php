@@ -30,7 +30,7 @@ class ProductController extends Controller
 
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
-        $authUserName = $user?->nome ?? $user?->name ?? 'Usuario';
+        $authUserName = $user?->nome ?? 'Usuario';
         $cart = session()->get('cart', []);
         $cartCount = array_sum(array_column($cart, 'quantity'));
 
@@ -52,7 +52,7 @@ class ProductController extends Controller
 
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
-        $authUserName = $user?->nome ?? $user?->name ?? 'Usuario';
+        $authUserName = $user?->nome ?? 'Usuario';
         $isAdmin = (bool) ($user?->is_admin ?? false);
         
         $canPurchase = $isAuthenticated && !$isAdmin && $product->user_id !== $user->id && (int) $product->quantidade > 0;
@@ -85,10 +85,6 @@ class ProductController extends Controller
 
     public function adminIndex()
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-
         $products = Product::with(['category', 'user'])
             ->latest()
             ->paginate(10);
@@ -118,7 +114,7 @@ class ProductController extends Controller
             'preco' => 'required|numeric|min:0',
             'quantidade' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
-            'foto' => 'required|image|max:2048', // 2MB max
+            'foto' => 'required|image|max:2048',
         ]);
 
         $path = $request->file('foto')->store('products', 'public');

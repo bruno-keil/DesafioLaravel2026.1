@@ -10,8 +10,12 @@ class Address extends Model
     protected $table = 'enderecos';
 
     protected $fillable = [
-        'user_id', 'cep', 'logradouro', 'numero', 'bairro',
-        'cidade', 'estado', 'complemento', 'uf'
+        'user_id', 'nome', 'cep', 'logradouro', 'numero', 'bairro',
+        'cidade', 'estado', 'complemento', 'uf', 'is_default'
+    ];
+
+    protected $casts = [
+        'is_default' => 'boolean',
     ];
 
     public function user()

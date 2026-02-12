@@ -6,6 +6,25 @@ const formatBRL = (value: number) =>
 const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content;
 const summarySubtotal = document.querySelector<HTMLElement>('[data-subtotal]');
 
+const showToast = (message: string, type: 'error' | 'success' = 'error') => {
+    const existing = document.querySelector('[data-toast]');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.setAttribute('data-toast', '');
+    const colors = type === 'error'
+        ? 'border-red-400/30 bg-red-500/10 text-red-200'
+        : 'border-emerald-400/30 bg-emerald-500/10 text-emerald-200';
+    toast.className = `fixed top-6 right-6 z-50 rounded-xl border ${colors} px-5 py-3 text-sm shadow-lg transition-opacity duration-300`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+};
+
 const recalcSubtotal = () => {
     if (!summarySubtotal) return;
     const items = Array.from(document.querySelectorAll<HTMLElement>('[data-cart-item]'));
@@ -22,6 +41,7 @@ const syncQuantity = async (form: HTMLFormElement, nextValue: number) => {
     const input = form.querySelector<HTMLInputElement>('[data-input]');
     if (!input) return;
 
+    const previousValue = Number(input.value);
     input.value = String(nextValue);
     const item = form.closest<HTMLElement>('[data-cart-item]');
     if (item) {
@@ -40,24 +60,30 @@ const syncQuantity = async (form: HTMLFormElement, nextValue: number) => {
     payload.append('_method', 'PATCH');
 
     try {
-        await fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': csrfToken,
             },
             body: payload,
         });
-    } catch (error) {
-        // Silent failure keeps UI responsive; user can refresh to recover.
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+    } catch {
+        input.value = String(previousValue);
+        if (item) {
+            const price = Number(item.dataset.price || 0);
+            const lineTotal = item.querySelector<HTMLElement>('[data-line-total]');
+            if (lineTotal) {
+                lineTotal.textContent = formatBRL(price * previousValue);
+            }
+        }
+        recalcSubtotal();
+        showToast('Erro ao atualizar quantidade. Tente novamente.');
     }
 };
-
-document.querySelectorAll<HTMLElement>('[data-photo]').forEach((el) => {
-    const url = el.dataset.photo;
-    if (url) {
-        el.style.backgroundImage = `url('${url}')`;
-    }
-});
 
 document.querySelectorAll<HTMLElement>('[data-cart-item]').forEach((item) => {
     const form = item.querySelector<HTMLFormElement>('[data-cart-form]');

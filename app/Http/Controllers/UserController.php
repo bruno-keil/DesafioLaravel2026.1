@@ -56,6 +56,7 @@ class UserController extends Controller
         ]);
 
         $user->address()->create([
+            'nome' => 'Principal',
             'cep' => $validated['cep'],
             'logradouro' => $validated['logradouro'],
             'numero' => $validated['numero'],
@@ -64,6 +65,7 @@ class UserController extends Controller
             'estado' => $validated['estado'],
             'uf' => $validated['uf'],
             'complemento' => $validated['complemento'] ?? null,
+            'is_default' => true,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Usuário criado com sucesso.');

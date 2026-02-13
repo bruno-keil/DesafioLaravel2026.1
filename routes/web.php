@@ -9,7 +9,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PurchaseController;
 use App\Models\Category;
@@ -47,6 +49,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/minhas-vendas', [SaleController::class, 'index'])->name('sales.index');
     Route::get('/minhas-compras', [PurchaseController::class, 'index'])->name('purchases.index');
+
+    // User PDF reports
+    Route::get('/relatorios/compras/pdf', [ReportController::class, 'userPurchasesPdf'])->name('reports.purchases.pdf');
+    Route::get('/relatorios/vendas/pdf', [ReportController::class, 'userSalesPdf'])->name('reports.sales.pdf');
+
     Route::get('/meus-produtos', [ProductController::class, 'myProducts'])->name('products.my');
     Route::get('/produtos/criar', [ProductController::class, 'create'])->name('products.create');
     Route::post('/produtos', [ProductController::class, 'store'])->name('products.store');
@@ -57,6 +64,16 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('admins', AdminController::class);
         Route::get('products', [ProductController::class, 'adminIndex'])->name('products.index');
+
+        // Admin transaction pages
+        Route::get('compras', [AdminTransactionController::class, 'purchases'])->name('purchases.index');
+        Route::get('vendas', [AdminTransactionController::class, 'sales'])->name('sales.index');
+
+        // Admin reports
+        Route::get('relatorios/compras/pdf', [ReportController::class, 'adminPurchasesPdf'])->name('purchases.pdf');
+        Route::get('relatorios/compras/excel', [ReportController::class, 'adminPurchasesExcel'])->name('purchases.excel');
+        Route::get('relatorios/vendas/pdf', [ReportController::class, 'adminSalesPdf'])->name('sales.pdf');
+        Route::get('relatorios/vendas/excel', [ReportController::class, 'adminSalesExcel'])->name('sales.excel');
     });
 });
 

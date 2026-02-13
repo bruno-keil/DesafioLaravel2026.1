@@ -162,6 +162,22 @@
                         <h3 class="font-bold text-white mb-1">Todos Produtos</h3>
                         <p class="text-xs text-white/50">Moderação de produtos.</p>
                     </a>
+
+                    <a href="{{ route('admin.purchases.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
+                            <i class="bi bi-bag-check text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Todas Compras</h3>
+                        <p class="text-xs text-white/50">Ver todas compras e exportar relatórios.</p>
+                    </a>
+
+                    <a href="{{ route('admin.sales.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
+                            <i class="bi bi-currency-dollar text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Todas Vendas</h3>
+                        <p class="text-xs text-white/50">Ver todas vendas e exportar relatórios.</p>
+                    </a>
                 </div>
             </div>
             @endif

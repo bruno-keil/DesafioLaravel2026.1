@@ -11,6 +11,10 @@
                         <h1 class="font-['Bebas_Neue'] text-[clamp(2rem,5vw,3rem)] uppercase tracking-[0.12em] text-white">Minhas Compras</h1>
                         <p class="text-white/60">Histórico de compras dos seus produtos.</p>
                     </div>
+                    <a href="{{ route('reports.purchases.pdf', request()->only('start_date', 'end_date')) }}"
+                       class="px-5 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition shadow-lg shadow-red-500/20">
+                        <i class="bi bi-file-earmark-pdf mr-1"></i>Baixar PDF
+                    </a>
                 </div>
             </div>
         </div>
@@ -18,6 +22,29 @@
 
     <section class="py-10">
         <div class="mx-auto w-[min(1140px,92vw)]">
+
+            {{-- Date filter --}}
+            <form method="GET" action="{{ route('purchases.index') }}" class="mb-8 flex flex-wrap items-end gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div>
+                    <label class="block text-xs text-white/40 uppercase tracking-wider mb-1">Data Início</label>
+                    <input type="date" name="start_date" value="{{ request('start_date') }}"
+                           class="rounded-lg bg-white/10 border border-white/20 text-white text-sm px-3 py-2 focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-white/40 uppercase tracking-wider mb-1">Data Fim</label>
+                    <input type="date" name="end_date" value="{{ request('end_date') }}"
+                           class="rounded-lg bg-white/10 border border-white/20 text-white text-sm px-3 py-2 focus:outline-none focus:border-purple-500">
+                </div>
+                <button type="submit" class="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition">
+                    <i class="bi bi-funnel mr-1"></i>Filtrar
+                </button>
+                @if(request('start_date') || request('end_date'))
+                    <a href="{{ route('purchases.index') }}" class="px-5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm transition">
+                        <i class="bi bi-x-circle mr-1"></i>Limpar
+                    </a>
+                @endif
+            </form>
+
             @if($purchases->isEmpty())
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
                     <i class="bi bi-receipt-cutoff text-5xl text-white/20 mb-4 block"></i>

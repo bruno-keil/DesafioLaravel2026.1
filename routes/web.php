@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\PurchaseController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.default');
 
     Route::get('/minhas-vendas', [SaleController::class, 'index'])->name('sales.index');
+    Route::get('/minhas-compras', [PurchaseController::class, 'index'])->name('purchases.index');
     Route::get('/meus-produtos', [ProductController::class, 'myProducts'])->name('products.my');
     Route::get('/produtos/criar', [ProductController::class, 'create'])->name('products.create');
     Route::post('/produtos', [ProductController::class, 'store'])->name('products.store');

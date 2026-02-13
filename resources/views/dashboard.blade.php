@@ -97,7 +97,7 @@
                         <p class="text-xs text-white/50">Visualize itens pendentes.</p>
                     </a>
 
-                    <a href="#" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
+                    <a href="{{ route('purchases.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
                             <i class="bi bi-bag-check text-xl"></i>
                         </div>

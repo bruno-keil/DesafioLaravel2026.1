@@ -28,7 +28,7 @@ class Address extends Model
         static::saving(function ($address) {
             if ($address->isDirty('cep') && strlen($address->cep) == 8) {
                 
-                $response = Http::get("https://viacep.com.br/ws/{$address->cep}/json/");
+                $response = Http::get(url("/api/cep/{$address->cep}"));
 
                 if ($response->successful() && !isset($response['erro'])) {
                     $data = $response->json();

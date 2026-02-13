@@ -34,7 +34,7 @@
                             @foreach ($products as $product)
                                 <tr class="hover:bg-white/5 transition">
                                     <td class="px-6 py-4 font-medium text-white flex items-center gap-3">
-                                        <img class="h-10 w-10 rounded object-cover shrink-0" src="{{ str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto) }}" alt="{{ $product->nome }}">
+                                        <img class="h-10 w-10 rounded object-cover shrink-0" src="{{ $product->display_photo }}" alt="{{ $product->nome }}">
                                         <div>
                                             <a href="{{ route('products.show', $product) }}" class="hover:underline block">{{ $product->nome }}</a>
                                             <span class="text-[0.65rem] text-white/40 uppercase">{{ $product->category->nome ?? 'N/A' }}</span>

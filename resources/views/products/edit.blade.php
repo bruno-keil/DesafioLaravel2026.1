@@ -24,7 +24,7 @@
                         <label class="block text-xs uppercase tracking-wider text-white/50 mb-2">Foto do Produto</label>
                         <div class="relative aspect-square rounded-2xl border-2 border-dashed border-white/20 hover:border-emerald-500/50 bg-black/20 transition flex flex-col items-center justify-center cursor-pointer group overflow-hidden">
                             <input type="file" name="foto" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="previewImage(this)" accept="image/*">
-                            <img id="preview" src="{{ str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto) }}" class="absolute inset-0 w-full h-full object-cover">
+                            <img id="preview" src="{{ $product->display_photo }}" class="absolute inset-0 w-full h-full object-cover">
                             <div id="placeholder" class="text-center p-4 group-hover:scale-105 transition hidden">
                                 <i class="bi bi-camera text-3xl text-white/30 group-hover:text-emerald-400 mb-2 block"></i>
                                 <span class="text-sm text-white/50 group-hover:text-white">Clique para alterar</span>

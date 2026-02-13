@@ -121,7 +121,7 @@
                         <p class="text-xs text-white/50">Cadastre e gerencie anúncios.</p>
                     </a>
 
-                    <a href="#" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
+                    <a href="{{ route('sales.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition">
                             <i class="bi bi-currency-dollar text-xl"></i>
                         </div>

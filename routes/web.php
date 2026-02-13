@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\CartController;use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagSeguroController;
 use App\Http\Controllers\ProductController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SaleController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
     Route::patch('/profile/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.default');
 
+    Route::get('/minhas-vendas', [SaleController::class, 'index'])->name('sales.index');
     Route::get('/meus-produtos', [ProductController::class, 'myProducts'])->name('products.my');
     Route::get('/produtos/criar', [ProductController::class, 'create'])->name('products.create');
     Route::post('/produtos', [ProductController::class, 'store'])->name('products.store');

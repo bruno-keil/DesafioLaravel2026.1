@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\TransactionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class PagSeguroController extends Controller
@@ -31,12 +34,31 @@ class PagSeguroController extends Controller
           ]);
 
         if ($response->successful()) {
-            Transaction::create([
-                'comprador_id' => $request->user()->id,
-                'valor_total' => collect($items)->sum(fn($item) => $item['price'] * $item['quantity']),
-                'data' => now(),
-                'status' => 'aprovado'
-            ]);
+            DB::transaction(function () use ($items, $request) {
+                $transaction = Transaction::create([
+                    'comprador_id' => $request->user()->id,
+                    'valor_total' => collect($items)->sum(fn($item) => $item['price'] * $item['quantity']),
+                    'data' => now(),
+                    'status' => 'aprovado',
+                ]);
+
+                foreach ($items as $item) {
+                    $product = Product::findOrFail($item['product_id']);
+
+                    TransactionItem::create([
+                        'transacao_id' => $transaction->id,
+                        'produto_id'   => $product->id,
+                        'quantidade'   => $item['quantity'],
+                        'valor_unitario' => $item['price'],
+                    ]);
+
+                    $product->decrement('quantidade', $item['quantity']);
+
+                    $product->user->increment('saldo', $item['price'] * $item['quantity']);
+                }
+            });
+
+            session()->forget('cart');
 
             $paymentLink = data_get($response->json(), 'links.1.href');
             return redirect()->away($paymentLink);

@@ -28,8 +28,6 @@ function createTransactionForBuyer(User $buyer, User $seller, string $date = '20
     return $transaction;
 }
 
-// ─── USER PURCHASES PDF ──────────────────────────────────────────────
-
 it('allows authenticated user to download purchases PDF', function () {
     $buyer = User::factory()->create();
     $seller = User::factory()->create();
@@ -104,8 +102,6 @@ it('redirects guest from purchases PDF', function () {
         ->assertRedirect();
 });
 
-// ─── USER SALES PDF ──────────────────────────────────────────────────
-
 it('allows authenticated user to download sales PDF', function () {
     $buyer = User::factory()->create();
     $seller = User::factory()->create();
@@ -137,8 +133,6 @@ it('redirects guest from sales PDF', function () {
     $this->get(route('reports.sales.pdf'))
         ->assertRedirect();
 });
-
-// ─── ADMIN PURCHASES PDF ────────────────────────────────────────────
 
 it('allows admin to download purchases PDF', function () {
     $admin = User::factory()->create(['is_admin' => true]);
@@ -177,8 +171,6 @@ it('filters admin purchases PDF by date range', function () {
         ->assertHeader('content-type', 'application/pdf');
 });
 
-// ─── ADMIN PURCHASES EXCEL ─────────────────────────────────────────
-
 it('allows admin to download purchases Excel', function () {
     $admin = User::factory()->create(['is_admin' => true]);
     $buyer = User::factory()->create();
@@ -216,8 +208,6 @@ it('filters admin purchases Excel by date range', function () {
         ->assertHeader('content-disposition');
 });
 
-// ─── ADMIN SALES PDF ────────────────────────────────────────────────
-
 it('allows admin to download sales PDF', function () {
     $admin = User::factory()->create(['is_admin' => true]);
     $buyer = User::factory()->create();
@@ -237,8 +227,6 @@ it('blocks non-admin from admin sales PDF', function () {
         ->get(route('admin.sales.pdf'))
         ->assertForbidden();
 });
-
-// ─── ADMIN SALES EXCEL ─────────────────────────────────────────────
 
 it('allows admin to download sales Excel', function () {
     $admin = User::factory()->create(['is_admin' => true]);

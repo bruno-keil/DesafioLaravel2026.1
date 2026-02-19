@@ -30,8 +30,6 @@ function createAdminTransactionData(string $date = '2026-01-15 10:00:00', string
     return $transaction;
 }
 
-// ─── ADMIN PURCHASES PAGE ───────────────────────────────────────────
-
 it('allows admin to view all purchases', function () {
     $admin = User::factory()->create(['is_admin' => true]);
     createAdminTransactionData();
@@ -125,8 +123,6 @@ it('paginates admin purchases', function () {
     $purchases = $response->viewData('purchases');
     expect($purchases)->toHaveCount(15);
 });
-
-// ─── ADMIN SALES PAGE ───────────────────────────────────────────────
 
 it('allows admin to view all sales', function () {
     $admin = User::factory()->create(['is_admin' => true]);

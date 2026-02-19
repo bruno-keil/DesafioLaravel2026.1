@@ -28,8 +28,6 @@ function createDateFilterTransaction(User $buyer, User $seller, string $date): T
     return $transaction;
 }
 
-// ─── USER PURCHASES DATE FILTERING ──────────────────────────────────
-
 it('shows user purchases page without filters', function () {
     $buyer = User::factory()->create();
     $seller = User::factory()->create();
@@ -105,12 +103,9 @@ it('preserves query string in user purchases pagination', function () {
         ->get(route('purchases.index', ['start_date' => '2026-01-01']));
 
     $response->assertOk();
-    // Should have 15 on page 1 with pagination
     $purchases = $response->viewData('purchases');
     expect($purchases)->toHaveCount(15);
 });
-
-// ─── USER SALES DATE FILTERING ──────────────────────────────────────
 
 it('shows user sales page without filters', function () {
     $buyer = User::factory()->create();

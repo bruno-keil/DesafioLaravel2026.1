@@ -128,7 +128,7 @@ it('adds a second address from checkout', function () {
 
 it('validates address_id when selecting', function () {
     $this->post(route('checkout.address.update'), [])
-        ->assertStatus(404); // findOrFail with no address_id
+        ->assertStatus(404);
 });
 
 it('validates address fields when storing from checkout', function () {

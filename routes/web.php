@@ -9,7 +9,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminContactController;
 use App\Http\Controllers\AdminTransactionController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
@@ -21,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/produtos', [ProductController::class, 'index'])->name('products.index');
+
+Route::get('/contato', [ContactController::class, 'index'])->name('contato.index');
+Route::post('/contato', [ContactController::class, 'store'])->name('contato.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
@@ -50,7 +55,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/minhas-vendas', [SaleController::class, 'index'])->name('sales.index');
     Route::get('/minhas-compras', [PurchaseController::class, 'index'])->name('purchases.index');
 
-    // User PDF reports
     Route::get('/relatorios/compras/pdf', [ReportController::class, 'userPurchasesPdf'])->name('reports.purchases.pdf');
     Route::get('/relatorios/vendas/pdf', [ReportController::class, 'userSalesPdf'])->name('reports.sales.pdf');
 
@@ -65,11 +69,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('admins', AdminController::class);
         Route::get('products', [ProductController::class, 'adminIndex'])->name('products.index');
 
-        // Admin transaction pages
         Route::get('compras', [AdminTransactionController::class, 'purchases'])->name('purchases.index');
         Route::get('vendas', [AdminTransactionController::class, 'sales'])->name('sales.index');
+        Route::get('/contatos', [AdminContactController::class, 'index'])->name('contato.index');
+        Route::post('/contatos/{id}/responder', [AdminContactController::class, 'respond'])->name('contato.respond');
+        Route::post('/contatos/enviar-email', [AdminContactController::class, 'sendEmail'])->name('contato.sendEmail');
 
-        // Admin reports
         Route::get('relatorios/compras/pdf', [ReportController::class, 'adminPurchasesPdf'])->name('purchases.pdf');
         Route::get('relatorios/compras/excel', [ReportController::class, 'adminPurchasesExcel'])->name('purchases.excel');
         Route::get('relatorios/vendas/pdf', [ReportController::class, 'adminSalesPdf'])->name('sales.pdf');

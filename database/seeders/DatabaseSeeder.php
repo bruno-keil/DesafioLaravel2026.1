@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
+            ContactSeeder::class,
         ]);
 
         $allUsers = User::all();

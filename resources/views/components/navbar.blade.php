@@ -19,6 +19,9 @@
     <div class="hidden items-center gap-6 text-white/60 md:flex">
         <a href="{{ url('/') }}" class="text-white/80 transition hover:text-white">Home</a>
         <a href="{{ route('products.index') }}" class="text-white/80 transition hover:text-white">Produtos</a>
+        @if (!auth()->user()?->is_admin)
+            <a href="{{ route('contato.index') }}" class="text-white/80 transition hover:text-white">Contato</a>
+        @endif
     </div>
 
     <div class="flex items-center gap-3">

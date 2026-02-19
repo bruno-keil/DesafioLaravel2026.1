@@ -130,6 +130,22 @@
                     </a>
                 </div>
             </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <span class="w-1 h-6 bg-blue-500 rounded-full inline-block"></span>
+                    Suporte
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="{{ route('contato.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-blue-500/40 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition">
+                            <i class="bi bi-envelope text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Fale Conosco</h3>
+                        <p class="text-xs text-white/50">Envie dúvidas ou reclamações.</p>
+                    </a>
+                </div>
+            </div>
             @endif
 
             @if(Auth::user()->is_admin)
@@ -177,6 +193,14 @@
                         </div>
                         <h3 class="font-bold text-white mb-1">Todas Vendas</h3>
                         <p class="text-xs text-white/50">Ver todas vendas e exportar relatórios.</p>
+                    </a>
+
+                    <a href="{{ route('admin.contato.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
+                            <i class="bi bi-envelope text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Contatos</h3>
+                        <p class="text-xs text-white/50">Mensagens recebidas e envio de emails.</p>
                     </a>
                 </div>
             </div>

@@ -6,11 +6,11 @@
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
-        <div class="relative z-10 mx-auto w-[min(1140px,92vw)]">
+        <div class="relative z-10 container-main">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mt-10">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em]">Anuncios P2P</h1>
+                <h1 class="page-title-lg">Anuncios P2P</h1>
                 <p class="mt-2 text-white/70">Escolha uma categoria para ver anuncios de outros usuarios.</p>
                 @php
                     $searchQuery = $searchTerm ? ['busca' => $searchTerm] : [];
@@ -43,10 +43,10 @@
     </header>
 
     <section class="py-14">
-        <div class="mx-auto w-[min(1140px,92vw)]">
+        <div class="container-main">
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse ($products as $product)
-                    <a class="group block rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-2 hover:border-emerald-400/50" href="{{ route('products.show', $product) }}">
+                    <a class="group block glass-card transition hover:-translate-y-2 hover:border-emerald-400/50" href="{{ route('products.show', $product) }}">
                         <img class="aspect-[4/3] w-full rounded-t-2xl object-cover" src="{{ $product->display_photo }}" alt="{{ $product->nome }}">
                         <div class="p-4">
                             <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>

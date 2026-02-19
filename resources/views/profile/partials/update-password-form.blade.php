@@ -14,25 +14,25 @@
         @method('put')
 
         <div>
-            <label for="update_password_current_password" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('Senha Atual') }}</label>
-            <input id="update_password_current_password" name="current_password" type="password" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" autocomplete="current-password" />
+            <label for="update_password_current_password" class="form-label-dark">{{ __('Senha Atual') }}</label>
+            <input id="update_password_current_password" name="current_password" type="password" class="form-input-dark placeholder-white/20" autocomplete="current-password" />
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <label for="update_password_password" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('Nova Senha') }}</label>
-            <input id="update_password_password" name="password" type="password" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" autocomplete="new-password" />
+            <label for="update_password_password" class="form-label-dark">{{ __('Nova Senha') }}</label>
+            <input id="update_password_password" name="password" type="password" class="form-input-dark placeholder-white/20" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <label for="update_password_password_confirmation" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('Confirmar Nova Senha') }}</label>
-            <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" autocomplete="new-password" />
+            <label for="update_password_password_confirmation" class="form-label-dark">{{ __('Confirmar Nova Senha') }}</label>
+            <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-input-dark placeholder-white/20" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="px-6 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg shadow-emerald-500/20 transition">
+            <button type="submit" class="btn-primary">
                 {{ __('Salvar') }}
             </button>
 

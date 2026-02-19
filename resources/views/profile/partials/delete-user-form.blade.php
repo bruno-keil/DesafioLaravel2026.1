@@ -43,7 +43,7 @@
             </div>
 
             <div class="mt-6 flex justify-end gap-3">
-                <button type="button" x-on:click="$dispatch('close')" class="px-4 py-2 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition">
+                <button type="button" x-on:click="$dispatch('close')" class="btn-ghost px-4 py-2">
                     {{ __('Cancelar') }}
                 </button>
 

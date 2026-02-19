@@ -6,7 +6,7 @@
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
-        <div class="relative z-10 mx-auto w-[min(1140px,92vw)]">
+        <div class="relative z-10 container-main">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mt-10 text-sm text-white/60">
@@ -16,12 +16,12 @@
     </header>
 
     <section class="py-14">
-        <div class="mx-auto w-[min(1140px,92vw)]">
+        <div class="container-main">
             <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-                <div class="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                <div class="overflow-hidden glass-card">
                     <img class="aspect-[4/5] w-full object-cover" src="{{ $displayPhoto }}" alt="{{ $product->nome }}">
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <div class="glass-card p-6">
                     <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>
                     <h1 class="mt-3 font-['Bebas_Neue'] text-[clamp(2.2rem,5vw,3rem)] uppercase tracking-[0.12em]">{{ $product->nome }}</h1>
                     <div class="mt-2 text-2xl font-semibold text-emerald-300">R$ {{ number_format((float) $product->preco, 2, ',', '.') }}</div>

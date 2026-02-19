@@ -3,12 +3,12 @@
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-[#0a0f16]"></div>
         <div class="relative z-10">
             <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
-            <div class="mt-8 mx-auto w-[min(1140px,92vw)]">
+            <div class="mt-8 container-main">
                 <a href="{{ route('dashboard') }}" class="text-sm text-white/50 hover:text-white transition mb-2 inline-block">&larr; Voltar ao Dashboard</a>
 
                 <div class="flex flex-col md:flex-row justify-between items-end gap-4">
                     <div>
-                        <h1 class="font-['Bebas_Neue'] text-[clamp(2rem,5vw,3rem)] uppercase tracking-[0.12em] text-white">Minhas Vendas</h1>
+                        <h1 class="page-title">Minhas Vendas</h1>
                         <p class="text-white/60">Histórico de vendas dos seus produtos.</p>
                     </div>
                     <a href="{{ route('reports.sales.pdf', request()->only('start_date', 'end_date')) }}"
@@ -21,10 +21,10 @@
     </header>
 
     <section class="py-10">
-        <div class="mx-auto w-[min(1140px,92vw)]">
+        <div class="container-main">
 
             {{-- Date filter --}}
-            <form method="GET" action="{{ route('sales.index') }}" class="mb-8 flex flex-wrap items-end gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <form method="GET" action="{{ route('sales.index') }}" class="mb-8 flex flex-wrap items-end gap-4 glass-card p-5">
                 <div>
                     <label class="block text-xs text-white/40 uppercase tracking-wider mb-1">Data Início</label>
                     <input type="date" name="start_date" value="{{ request('start_date') }}"
@@ -46,17 +46,17 @@
             </form>
 
             @if($sales->isEmpty())
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+                <div class="glass-card p-12 text-center">
                     <i class="bi bi-receipt-cutoff text-5xl text-white/20 mb-4 block"></i>
                     <p class="text-white/40 text-lg">Você ainda não realizou nenhuma venda.</p>
-                    <a href="{{ route('products.my') }}" class="mt-4 inline-block px-6 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold transition shadow-lg shadow-emerald-500/20">
+                    <a href="{{ route('products.my') }}" class="mt-4 inline-block btn-primary">
                         <i class="bi bi-tags mr-2"></i>Gerenciar Produtos
                     </a>
                 </div>
             @else
                 <div class="space-y-6">
                     @foreach($sales as $sale)
-                        <div class="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+                        <div class="glass-card overflow-hidden">
                             {{-- Sale header --}}
                             <div class="flex flex-wrap items-center justify-between gap-4 px-6 py-4 bg-white/5 border-b border-white/10">
                                 <div class="flex items-center gap-4">
@@ -84,7 +84,7 @@
                                         ];
                                         $color = $statusColors[strtolower($sale->status)] ?? 'bg-white/10 border-white/20 text-white/60';
                                     @endphp
-                                    <span class="px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-wider {{ $color }}">
+                                    <span class="status-badge {{ $color }}">
                                         {{ ucfirst($sale->status) }}
                                     </span>
                                 </div>
@@ -92,7 +92,7 @@
 
                             {{-- Items table --}}
                             <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm text-white/70">
+                                <table class="data-table">
                                     <thead class="text-xs uppercase tracking-wider text-white/40 border-b border-white/5">
                                         <tr>
                                             <th class="px-6 py-3">Produto</th>

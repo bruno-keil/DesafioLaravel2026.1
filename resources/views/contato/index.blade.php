@@ -2,11 +2,11 @@
     <header class="relative overflow-hidden py-12">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=1400&q=80');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90"></div>
-        <div class="relative z-10 mx-auto w-[min(1140px,92vw)]">
+        <div class="relative z-10 container-main">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
             <div class="mt-10">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em]">Fale Conosco</h1>
+                <h1 class="page-title-lg">Fale Conosco</h1>
                 <p class="mt-2 text-white/70">Envie sua mensagem, duvida ou reclamacao. Responderemos o mais breve possivel.</p>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-8">
+            <div class="glass-card p-8">
                 <form action="{{ route('contato.store') }}" method="POST" class="space-y-6">
                     @csrf
 

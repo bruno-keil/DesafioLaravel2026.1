@@ -8,33 +8,33 @@
         <div class="relative z-10">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
-            <div class="mt-10 mx-auto w-[min(1140px,92vw)]">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em]">Carrinho</h1>
+            <div class="mt-10 container-main">
+                <h1 class="page-title-lg">Carrinho</h1>
                 <p class="mt-2 text-white/70">Revise seus itens e ajuste as quantidades antes de seguir.</p>
             </div>
         </div>
     </header>
 
     <section class="py-14">
-        <div class="mx-auto w-[min(1140px,92vw)] space-y-6">
+        <div class="container-main space-y-6">
             @if (session('error'))
-            <div class="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">{{ session('error') }}</div>
+            <div class="alert-error">{{ session('error') }}</div>
             @endif
             @if (session('notice'))
-            <div class="rounded-xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">{{ session('notice') }}</div>
+            <div class="alert-warning">{{ session('notice') }}</div>
             @endif
             @if (session('success'))
-            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">{{ session('success') }}</div>
+            <div class="alert-success">{{ session('success') }}</div>
             @endif
 
             @if (count($items) === 0)
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-10 text-center text-white/60">
+            <div class="glass-card p-10 text-center text-white/60">
                 Seu carrinho esta vazio.
             </div>
             @else
             <div class="space-y-4">
                 @foreach ($items as $item)
-                <div class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 md:flex-row md:items-center md:justify-between" data-cart-item data-price="{{ $item['price'] }}" data-max="{{ max(1, (int) $item['stock']) }}">
+                <div class="flex flex-col gap-4 glass-card p-4 md:flex-row md:items-center md:justify-between" data-cart-item data-price="{{ $item['price'] }}" data-max="{{ max(1, (int) $item['stock']) }}">
                     <div class="flex items-center gap-4">
                         <img class="h-20 w-24 rounded-xl object-cover" src="{{ $item['photo'] }}" alt="{{ $item['name'] }}" data-photo>
                         <div>
@@ -64,11 +64,11 @@
                 @endforeach
             </div>
 
-            <div class="flex flex-col items-start justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 md:flex-row md:items-center" data-cart-summary>
+            <div class="flex flex-col items-start justify-between gap-4 glass-card p-6 md:flex-row md:items-center" data-cart-summary>
                 <div class="text-sm text-white/60">Subtotal</div>
                 <div class="text-2xl font-semibold text-emerald-300" data-subtotal>R$ {{ number_format((float) $subtotal, 2, ',', '.') }}</div>
             </div>
-            <div class="flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 md:flex-row md:items-center" data-cart-summary>
+            <div class="flex flex-col items-center justify-center gap-4 glass-card p-6 md:flex-row md:items-center" data-cart-summary>
                 <a href="{{ route('checkout.address') }}" class="rounded-full border border-white/20 px-8 py-3 text-[0.8rem] uppercase tracking-[0.2em] text-emerald-300 transition hover:bg-emerald-500 hover:text-white hover:border-emerald-500 shadow-lg hover:shadow-emerald-500/20">
                     Checkout
                 </a>

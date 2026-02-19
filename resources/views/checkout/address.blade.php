@@ -4,8 +4,8 @@
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-[#0a0f16]"></div>
         <div class="relative z-10">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
-            <div class="mt-8 mx-auto w-[min(1140px,92vw)]">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(2.5rem,5vw,3.5rem)] uppercase tracking-[0.12em]">Checkout</h1>
+            <div class="mt-8 container-main">
+                <h1 class="page-title text-[clamp(2.5rem,5vw,3.5rem)]">Checkout</h1>
                 <div class="flex items-center gap-2 text-sm text-white/50 mt-2">
                     <span>Carrinho</span>
                     <i class="bi bi-chevron-right text-xs"></i>
@@ -18,23 +18,23 @@
     </header>
 
     <section class="py-10 pb-20">
-        <div class="mx-auto w-[min(1140px,92vw)] grid gap-8 lg:grid-cols-3">
+        <div class="container-main grid gap-8 lg:grid-cols-3">
             
             <div class="lg:col-span-2 space-y-6">
                 @if (session('success'))
-                    <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">{{ session('success') }}</div>
+                    <div class="alert-success">{{ session('success') }}</div>
                 @endif
                 @if (session('error'))
-                    <div class="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">{{ session('error') }}</div>
+                    <div class="alert-error">{{ session('error') }}</div>
                 @endif
                 @if (session('address-success'))
-                    <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">{{ session('address-success') }}</div>
+                    <div class="alert-success">{{ session('address-success') }}</div>
                 @endif
                 @if (session('address-error'))
-                    <div class="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">{{ session('address-error') }}</div>
+                    <div class="alert-error">{{ session('address-error') }}</div>
                 @endif
 
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+                <div class="glass-card p-6 md:p-8">
                     <h2 class="text-2xl font-semibold text-white mb-6">Endereço de Entrega</h2>
 
                     @if($addresses->count() > 0)
@@ -80,47 +80,47 @@
                                     <input type="hidden" name="_redirect" value="{{ route('checkout.address') }}">
 
                                     <div>
-                                        <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Nome do endereço</label>
-                                        <input type="text" name="nome" placeholder="Ex: Casa, Trabalho..." class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" required maxlength="50">
+                                        <label class="form-label-dark">Nome do endereço</label>
+                                        <input type="text" name="nome" placeholder="Ex: Casa, Trabalho..." class="form-input-dark-sm placeholder-white/20" required maxlength="50">
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">CEP</label>
-                                            <input type="text" name="cep" id="checkout-new-cep" maxlength="8" placeholder="00000000" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" required>
+                                            <label class="form-label-dark">CEP</label>
+                                            <input type="text" name="cep" id="checkout-new-cep" maxlength="8" placeholder="00000000" class="form-input-dark-sm placeholder-white/20" required>
                                         </div>
                                         <div>
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">UF</label>
-                                            <input type="text" name="uf" id="checkout-new-uf" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" readonly required>
+                                            <label class="form-label-dark">UF</label>
+                                            <input type="text" name="uf" id="checkout-new-uf" class="form-input-dark-sm" readonly required>
                                             <input type="hidden" name="estado" id="checkout-new-estado">
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-4 gap-3">
                                         <div class="col-span-3">
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Logradouro</label>
-                                            <input type="text" name="logradouro" id="checkout-new-logradouro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                            <label class="form-label-dark">Logradouro</label>
+                                            <input type="text" name="logradouro" id="checkout-new-logradouro" class="form-input-dark-sm" required>
                                         </div>
                                         <div>
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Número</label>
-                                            <input type="text" name="numero" id="checkout-new-numero" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                            <label class="form-label-dark">Número</label>
+                                            <input type="text" name="numero" id="checkout-new-numero" class="form-input-dark-sm" required>
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Bairro</label>
-                                            <input type="text" name="bairro" id="checkout-new-bairro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                            <label class="form-label-dark">Bairro</label>
+                                            <input type="text" name="bairro" id="checkout-new-bairro" class="form-input-dark-sm" required>
                                         </div>
                                         <div>
-                                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Cidade</label>
-                                            <input type="text" name="cidade" id="checkout-new-cidade" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                            <label class="form-label-dark">Cidade</label>
+                                            <input type="text" name="cidade" id="checkout-new-cidade" class="form-input-dark-sm" required>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Complemento</label>
-                                        <input type="text" name="complemento" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                                        <label class="form-label-dark">Complemento</label>
+                                        <input type="text" name="complemento" class="form-input-dark-sm">
                                     </div>
 
                                     <div class="flex items-center justify-end gap-2 pt-2">
@@ -130,7 +130,7 @@
                                 </form>
                             </div>
                         @else
-                            <div class="rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-sm text-amber-200 mb-6">
+                            <div class="alert-warning mb-6">
                                 Limite de 10 endereços. Remova um no <a href="{{ route('profile.edit') }}" class="underline text-amber-300 hover:text-amber-100">perfil</a> para adicionar outro.
                             </div>
                         @endif
@@ -148,47 +148,47 @@
                             <input type="hidden" name="_redirect" value="{{ route('checkout.address') }}">
 
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Nome do endereço</label>
-                                <input type="text" name="nome" placeholder="Ex: Casa, Trabalho..." class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" value="{{ old('nome') }}" required maxlength="50">
+                                <label class="form-label-dark">Nome do endereço</label>
+                                <input type="text" name="nome" placeholder="Ex: Casa, Trabalho..." class="form-input-dark placeholder-white/20" value="{{ old('nome') }}" required maxlength="50">
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">CEP</label>
-                                    <input type="text" name="cep" id="cep" maxlength="8" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" placeholder="00000000" value="{{ old('cep') }}" required>
+                                    <label class="form-label-dark">CEP</label>
+                                    <input type="text" name="cep" id="cep" maxlength="8" class="form-input-dark placeholder-white/20" placeholder="00000000" value="{{ old('cep') }}" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Estado (UF)</label>
-                                    <input type="text" name="uf" id="uf" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('uf') }}" readonly required>
+                                    <label class="form-label-dark">Estado (UF)</label>
+                                    <input type="text" name="uf" id="uf" class="form-input-dark" value="{{ old('uf') }}" readonly required>
                                     <input type="hidden" name="estado" id="estado" value="{{ old('estado') }}">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div class="md:col-span-3">
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Logradouro</label>
-                                    <input type="text" name="logradouro" id="logradouro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('logradouro') }}" required>
+                                    <label class="form-label-dark">Logradouro</label>
+                                    <input type="text" name="logradouro" id="logradouro" class="form-input-dark" value="{{ old('logradouro') }}" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Número</label>
-                                    <input type="text" name="numero" id="numero" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('numero') }}" required>
+                                    <label class="form-label-dark">Número</label>
+                                    <input type="text" name="numero" id="numero" class="form-input-dark" value="{{ old('numero') }}" required>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Bairro</label>
-                                    <input type="text" name="bairro" id="bairro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('bairro') }}" required>
+                                    <label class="form-label-dark">Bairro</label>
+                                    <input type="text" name="bairro" id="bairro" class="form-input-dark" value="{{ old('bairro') }}" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Cidade</label>
-                                    <input type="text" name="cidade" id="cidade" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('cidade') }}" required>
+                                    <label class="form-label-dark">Cidade</label>
+                                    <input type="text" name="cidade" id="cidade" class="form-input-dark" value="{{ old('cidade') }}" required>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Complemento</label>
-                                <input type="text" name="complemento" id="complemento" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" value="{{ old('complemento') }}">
+                                <label class="form-label-dark">Complemento</label>
+                                <input type="text" name="complemento" id="complemento" class="form-input-dark" value="{{ old('complemento') }}">
                             </div>
 
                             <div class="pt-4">
@@ -200,7 +200,7 @@
             </div>
 
             <div class="space-y-6">
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 sticky top-6">
+                <div class="glass-card p-6 sticky top-6">
                     <h3 class="font-['Bebas_Neue'] text-2xl tracking-wide mb-4">Resumo do Pedido</h3>
                     
                     <div class="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2 custom-scrollbar">

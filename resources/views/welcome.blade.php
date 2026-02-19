@@ -7,11 +7,11 @@
         <div class="relative z-10">
             <x-navbar :is-authenticated="$isAuthenticated" :auth-user-name="$authUserName" />
 
-            <div class="mx-auto mt-6 w-[min(1140px,92vw)]">
+            <div class="container-main mt-6">
                 <div class="h-px bg-white/20"></div>
             </div>
 
-            <div class="mx-auto mt-10 grid w-[min(1140px,92vw)] gap-10 lg:grid-cols-[1.2fr_0.4fr] lg:items-center">
+            <div class="container-main mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.4fr] lg:items-center">
                 <div>
                     <div class="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.4em] text-emerald-300 transition duration-300" data-hero-tag>{{ $firstSlide['tag'] }}</div>
                     <h1 class="mt-4 font-['Bebas_Neue'] text-[clamp(3.5rem,10vw,7rem)] leading-[0.88] uppercase tracking-[0.12em] transition duration-300" data-hero-title>{{ $firstSlide['title'] }}</h1>
@@ -33,14 +33,14 @@
     </header>
 
     <section class="py-16" id="produtos">
-        <div class="mx-auto w-[min(1140px,92vw)]">
+        <div class="container-main">
             <div class="text-center">
                 <p class="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">anuncios recentes</p>
                 <h2 class="mt-2 font-['Bebas_Neue'] text-[clamp(2.2rem,4vw,3rem)] uppercase tracking-[0.12em]">Itens de outros usuarios</h2>
             </div>
             <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse ($products as $product)
-                    <a class="group block rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-2 hover:border-emerald-400/50" href="{{ route('products.show', $product) }}">
+                    <a class="group block glass-card transition hover:-translate-y-2 hover:border-emerald-400/50" href="{{ route('products.show', $product) }}">
                         <img class="aspect-[4/3] w-full rounded-t-2xl object-cover" src="{{ $product->display_photo }}" alt="{{ $product->nome }}">
                         <div class="p-4">
                             <div class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50">{{ $product->category?->nome ?? 'Loot' }}</div>

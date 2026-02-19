@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .container-main    { @apply mx-auto w-[min(1140px,92vw)]; }
+  .glass-card        { @apply rounded-2xl border border-white/10 bg-white/5; }
+  .page-title        { @apply font-['Bebas_Neue'] text-[clamp(2rem,5vw,3rem)] uppercase tracking-[0.12em] text-white; }
+  .page-title-lg     { @apply font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em]; }
+  .form-input-dark   { @apply w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500; }
+  .form-input-dark-sm { @apply w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500; }
+  .form-label-dark   { @apply block text-xs uppercase tracking-wider text-white/50 mb-1; }
+  .btn-primary       { @apply px-6 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold transition shadow-lg shadow-emerald-500/20; }
+  .btn-ghost         { @apply px-6 py-2 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition; }
+  .alert-success     { @apply rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200; }
+  .alert-error       { @apply rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200; }
+  .alert-warning     { @apply rounded-xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200; }
+  .data-table        { @apply w-full text-left text-sm text-white/70; }
+  .data-table-head   { @apply bg-white/10 text-xs uppercase tracking-wider text-white; }
+  .status-badge      { @apply px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-wider; }
+}

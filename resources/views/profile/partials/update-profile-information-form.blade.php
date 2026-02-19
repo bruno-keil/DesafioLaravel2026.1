@@ -18,14 +18,14 @@
         @method('patch')
 
         <div>
-            <label for="nome" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('Nome') }}</label>
-            <input id="nome" name="nome" type="text" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" value="{{ old('nome', $user->nome) }}" required autofocus autocomplete="name" />
+            <label for="nome" class="form-label-dark">{{ __('Nome') }}</label>
+            <input id="nome" name="nome" type="text" class="form-input-dark placeholder-white/20" value="{{ old('nome', $user->nome) }}" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('nome')" />
         </div>
 
         <div>
-            <label for="email" class="block text-xs uppercase tracking-wider text-white/50 mb-1">{{ __('E-mail') }}</label>
-            <input id="email" name="email" type="email" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" value="{{ old('email', $user->email) }}" required autocomplete="username" />
+            <label for="email" class="form-label-dark">{{ __('E-mail') }}</label>
+            <input id="email" name="email" type="email" class="form-input-dark placeholder-white/20" value="{{ old('email', $user->email) }}" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -48,7 +48,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button type="submit" class="px-6 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold shadow-lg shadow-emerald-500/20 transition">
+            <button type="submit" class="btn-primary">
                 {{ __('Salvar') }}
             </button>
 

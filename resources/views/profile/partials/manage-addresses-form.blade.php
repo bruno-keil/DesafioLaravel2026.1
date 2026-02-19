@@ -9,13 +9,13 @@
     </header>
 
     @if (session('address-success'))
-        <div class="mt-4 rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+        <div class="mt-4 alert-success">
             {{ session('address-success') }}
         </div>
     @endif
 
     @if (session('address-error'))
-        <div class="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+        <div class="mt-4 alert-error">
             {{ session('address-error') }}
         </div>
     @endif
@@ -77,47 +77,47 @@
                         @method('PUT')
 
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Nome do endereço</label>
-                            <input type="text" name="nome" value="{{ $address->nome }}" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required maxlength="50">
+                            <label class="form-label-dark">Nome do endereço</label>
+                            <input type="text" name="nome" value="{{ $address->nome }}" class="form-input-dark-sm" required maxlength="50">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">CEP</label>
-                                <input type="text" name="cep" value="{{ $address->cep }}" maxlength="8" class="address-cep w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                <label class="form-label-dark">CEP</label>
+                                <input type="text" name="cep" value="{{ $address->cep }}" maxlength="8" class="address-cep form-input-dark-sm" required>
                             </div>
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">UF</label>
-                                <input type="text" name="uf" value="{{ $address->uf }}" class="address-uf w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" readonly required>
+                                <label class="form-label-dark">UF</label>
+                                <input type="text" name="uf" value="{{ $address->uf }}" class="address-uf form-input-dark-sm" readonly required>
                                 <input type="hidden" name="estado" value="{{ $address->estado }}" class="address-estado">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-4 gap-3">
                             <div class="col-span-3">
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Logradouro</label>
-                                <input type="text" name="logradouro" value="{{ $address->logradouro }}" class="address-logradouro w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                <label class="form-label-dark">Logradouro</label>
+                                <input type="text" name="logradouro" value="{{ $address->logradouro }}" class="address-logradouro form-input-dark-sm" required>
                             </div>
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Número</label>
-                                <input type="text" name="numero" value="{{ $address->numero }}" class="address-numero w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                <label class="form-label-dark">Número</label>
+                                <input type="text" name="numero" value="{{ $address->numero }}" class="address-numero form-input-dark-sm" required>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Bairro</label>
-                                <input type="text" name="bairro" value="{{ $address->bairro }}" class="address-bairro w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                <label class="form-label-dark">Bairro</label>
+                                <input type="text" name="bairro" value="{{ $address->bairro }}" class="address-bairro form-input-dark-sm" required>
                             </div>
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Cidade</label>
-                                <input type="text" name="cidade" value="{{ $address->cidade }}" class="address-cidade w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                                <label class="form-label-dark">Cidade</label>
+                                <input type="text" name="cidade" value="{{ $address->cidade }}" class="address-cidade form-input-dark-sm" required>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Complemento</label>
-                            <input type="text" name="complemento" value="{{ $address->complemento }}" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                            <label class="form-label-dark">Complemento</label>
+                            <input type="text" name="complemento" value="{{ $address->complemento }}" class="form-input-dark-sm">
                         </div>
 
                         <div class="flex items-center justify-end gap-2 pt-2">
@@ -144,47 +144,47 @@
                     @csrf
 
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Nome do endereço</label>
-                        <input type="text" name="nome" placeholder="Ex: Casa, Trabalho, Mãe..." class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" required maxlength="50">
+                        <label class="form-label-dark">Nome do endereço</label>
+                        <input type="text" name="nome" placeholder="Ex: Casa, Trabalho, Mãe..." class="form-input-dark-sm placeholder-white/20" required maxlength="50">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">CEP</label>
-                            <input type="text" name="cep" id="new-address-cep" maxlength="8" placeholder="00000000" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder-white/20" required>
+                            <label class="form-label-dark">CEP</label>
+                            <input type="text" name="cep" id="new-address-cep" maxlength="8" placeholder="00000000" class="form-input-dark-sm placeholder-white/20" required>
                         </div>
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">UF</label>
-                            <input type="text" name="uf" id="new-address-uf" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" readonly required>
+                            <label class="form-label-dark">UF</label>
+                            <input type="text" name="uf" id="new-address-uf" class="form-input-dark-sm" readonly required>
                             <input type="hidden" name="estado" id="new-address-estado">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-4 gap-3">
                         <div class="col-span-3">
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Logradouro</label>
-                            <input type="text" name="logradouro" id="new-address-logradouro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                            <label class="form-label-dark">Logradouro</label>
+                            <input type="text" name="logradouro" id="new-address-logradouro" class="form-input-dark-sm" required>
                         </div>
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Número</label>
-                            <input type="text" name="numero" id="new-address-numero" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                            <label class="form-label-dark">Número</label>
+                            <input type="text" name="numero" id="new-address-numero" class="form-input-dark-sm" required>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Bairro</label>
-                            <input type="text" name="bairro" id="new-address-bairro" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                            <label class="form-label-dark">Bairro</label>
+                            <input type="text" name="bairro" id="new-address-bairro" class="form-input-dark-sm" required>
                         </div>
                         <div>
-                            <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Cidade</label>
-                            <input type="text" name="cidade" id="new-address-cidade" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" required>
+                            <label class="form-label-dark">Cidade</label>
+                            <input type="text" name="cidade" id="new-address-cidade" class="form-input-dark-sm" required>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs uppercase tracking-wider text-white/50 mb-1">Complemento</label>
-                        <input type="text" name="complemento" class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                        <label class="form-label-dark">Complemento</label>
+                        <input type="text" name="complemento" class="form-input-dark-sm">
                     </div>
 
                     <div class="flex items-center justify-end gap-2 pt-2">

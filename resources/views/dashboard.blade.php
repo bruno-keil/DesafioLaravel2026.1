@@ -14,8 +14,8 @@
         <div class="relative z-10">
             <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
 
-            <div class="mt-12 mx-auto w-[min(1140px,92vw)]">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(3rem,6vw,4.2rem)] uppercase tracking-[0.12em] text-white">
+            <div class="mt-12 container-main">
+                <h1 class="page-title-lg text-white">
                     Dashboard
                 </h1>
                 <div class="flex flex-wrap items-center gap-4 mt-2">
@@ -31,11 +31,11 @@
     </header>
 
     <section class="py-14">
-        <div class="mx-auto w-[min(1140px,92vw)] space-y-12">
+        <div class="container-main space-y-12">
 
             <div class="grid grid-cols-1 {{ !Auth::user()->is_admin ? 'lg:grid-cols-2' : '' }} gap-6">
                 @if(Auth::user()->is_admin)
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm relative overflow-hidden group">
+                <div class="glass-card p-6 backdrop-blur-sm relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
                         <i class="bi bi-box-seam text-6xl text-blue-400"></i>
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 @else
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm relative overflow-hidden group">
+                <div class="glass-card p-6 backdrop-blur-sm relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
                         <i class="bi bi-graph-up-arrow text-6xl text-emerald-400"></i>
                     </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm flex flex-col justify-center relative overflow-hidden">
+                <div class="glass-card p-6 backdrop-blur-sm flex flex-col justify-center relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10">
                         <i class="bi bi-wallet2 text-6xl text-white"></i>
                     </div>
@@ -81,7 +81,7 @@
                     Compras
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="{{ route('products.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
+                    <a href="{{ route('products.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
                             <i class="bi bi-shop text-xl"></i>
                         </div>
@@ -89,7 +89,7 @@
                         <p class="text-xs text-white/50">Navegue e compre produtos.</p>
                     </a>
 
-                    <a href="{{ route('cart.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
+                    <a href="{{ route('cart.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
                             <i class="bi bi-cart3 text-xl"></i>
                         </div>
@@ -97,7 +97,7 @@
                         <p class="text-xs text-white/50">Visualize itens pendentes.</p>
                     </a>
 
-                    <a href="{{ route('purchases.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
+                    <a href="{{ route('purchases.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-purple-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
                             <i class="bi bi-bag-check text-xl"></i>
                         </div>
@@ -113,7 +113,7 @@
                     Vendas
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="{{ route('products.my') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
+                    <a href="{{ route('products.my') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition">
                             <i class="bi bi-tags text-xl"></i>
                         </div>
@@ -121,7 +121,7 @@
                         <p class="text-xs text-white/50">Cadastre e gerencie anúncios.</p>
                     </a>
 
-                    <a href="{{ route('sales.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
+                    <a href="{{ route('sales.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-emerald-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition">
                             <i class="bi bi-currency-dollar text-xl"></i>
                         </div>
@@ -137,7 +137,7 @@
                     Suporte
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="{{ route('contato.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-blue-500/40 transition duration-300">
+                    <a href="{{ route('contato.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-blue-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition">
                             <i class="bi bi-envelope text-xl"></i>
                         </div>
@@ -155,7 +155,7 @@
                     Administração
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="{{ route('admin.users.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.users.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-people text-xl"></i>
                         </div>
@@ -163,7 +163,7 @@
                         <p class="text-xs text-white/50">Gerenciar contas de usuários.</p>
                     </a>
 
-                    <a href="{{ route('admin.admins.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.admins.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-shield-lock text-xl"></i>
                         </div>
@@ -171,7 +171,7 @@
                         <p class="text-xs text-white/50">Gerenciar acessos administrativos.</p>
                     </a>
 
-                    <a href="{{ route('admin.products.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.products.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-box-seam text-xl"></i>
                         </div>
@@ -179,7 +179,7 @@
                         <p class="text-xs text-white/50">Moderação de produtos.</p>
                     </a>
 
-                    <a href="{{ route('admin.purchases.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.purchases.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-bag-check text-xl"></i>
                         </div>
@@ -187,7 +187,7 @@
                         <p class="text-xs text-white/50">Ver todas compras e exportar relatórios.</p>
                     </a>
 
-                    <a href="{{ route('admin.sales.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.sales.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-currency-dollar text-xl"></i>
                         </div>
@@ -195,7 +195,7 @@
                         <p class="text-xs text-white/50">Ver todas vendas e exportar relatórios.</p>
                     </a>
 
-                    <a href="{{ route('admin.contato.index') }}" class="group p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
+                    <a href="{{ route('admin.contato.index') }}" class="group p-6 glass-card hover:bg-white/[0.08] hover:border-red-500/40 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition">
                             <i class="bi bi-envelope text-xl"></i>
                         </div>

@@ -11,7 +11,7 @@
     $cartHref = $cartHref ?? route('cart.index');
 @endphp
 
-<nav {{ $attributes->merge(['class' => 'mx-auto w-[min(1140px,92vw)] flex items-center justify-between gap-6 text-[0.7rem] uppercase tracking-[0.2em]']) }}>
+<nav {{ $attributes->merge(['class' => 'container-main flex items-center justify-between gap-6 text-[0.7rem] uppercase tracking-[0.2em]']) }}>
     <div class="flex items-center gap-3 font-semibold">
         <img src="{{ $brandImage }}" alt="{{ $brandImageAlt }}" class="{{ $brandImageClass }}">
     </div>

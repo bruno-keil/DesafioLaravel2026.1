@@ -10,8 +10,8 @@
         <div class="relative z-10">
             <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
 
-            <div class="mt-8 mx-auto w-[min(1140px,92vw)]">
-                <h1 class="font-['Bebas_Neue'] text-[clamp(2.5rem,5vw,3.5rem)] uppercase tracking-[0.12em] text-white">
+            <div class="mt-8 container-main">
+                <h1 class="page-title text-[clamp(2.5rem,5vw,3.5rem)]">
                     Configurações de Perfil
                 </h1>
             </div>
@@ -19,19 +19,19 @@
     </header>
 
     <div class="py-12 pb-24">
-        <div class="mx-auto w-[min(1140px,92vw)] space-y-8">
+        <div class="container-main space-y-8">
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div class="p-8 glass-card backdrop-blur-sm">
                     @include('profile.partials.update-profile-information-form')
                 </div>
 
-                <div class="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div class="p-8 glass-card backdrop-blur-sm">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="p-8 glass-card backdrop-blur-sm">
                 @include('profile.partials.manage-addresses-form')
             </div>
 

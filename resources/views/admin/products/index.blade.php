@@ -3,25 +3,25 @@
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-[#0a0f16]"></div>
         <div class="relative z-10">
             <x-navbar :is-authenticated="true" :auth-user-name="Auth::user()->nome" />
-            <div class="mt-8 mx-auto w-[min(1140px,92vw)]">
+            <div class="mt-8 container-main">
                 <a href="{{ route('dashboard') }}" class="text-sm text-white/50 hover:text-white transition mb-2 inline-block">&larr; Voltar ao Dashboard</a>
                 
-                <h1 class="font-['Bebas_Neue'] text-[clamp(2rem,5vw,3rem)] uppercase tracking-[0.12em] text-white">Todos os Produtos</h1>
+                <h1 class="page-title">Todos os Produtos</h1>
                 <p class="text-white/60">Moderação de produtos da plataforma.</p>
             </div>
         </div>
     </header>
 
     <section class="py-10">
-        <div class="mx-auto w-[min(1140px,92vw)]">
+        <div class="container-main">
             @if (session('success'))
-                <div class="mb-6 rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">{{ session('success') }}</div>
+                <div class="mb-6 alert-success">{{ session('success') }}</div>
             @endif
 
-            <div class="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+            <div class="glass-card overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-white/70">
-                        <thead class="bg-white/10 text-xs uppercase tracking-wider text-white">
+                    <table class="data-table">
+                        <thead class="data-table-head">
                             <tr>
                                 <th class="px-6 py-4">Produto</th>
                                 <th class="px-6 py-4">Vendedor</th>

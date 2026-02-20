@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\CepController;
 
 class Address extends Model
 {
@@ -28,7 +29,7 @@ class Address extends Model
         static::saving(function ($address) {
             if ($address->isDirty('cep') && strlen($address->cep) == 8) {
                 
-                $response = Http::get(url("/api/cep/{$address->cep}"));
+                $response = Http::get('cep.show', ['cep' => $address->cep]);
 
                 if ($response->successful() && !isset($response['erro'])) {
                     $data = $response->json();

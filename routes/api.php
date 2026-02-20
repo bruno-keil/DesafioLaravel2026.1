@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CepController;
 
-Route::get('/cep/{cep}', [CepController::class, 'show']);
+Route::get('/cep/{cep}', [CepController::class, 'show'])->name('cep.show');

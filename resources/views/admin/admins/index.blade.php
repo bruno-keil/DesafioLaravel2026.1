@@ -66,13 +66,15 @@
                                             <a href="{{ route('admin.admins.edit', $admin) }}" class="text-blue-400 hover:text-white transition" title="Editar">
                                                 <i class="bi bi-pencil-square text-lg"></i>
                                             </a>
-                                            <form action="{{ route('admin.admins.destroy', $admin) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este administrador?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-400 hover:text-white transition" title="Excluir">
-                                                    <i class="bi bi-trash text-lg"></i>
-                                                </button>
-                                            </form>
+                                            <button
+                                                type="button"
+                                                class="text-red-400 hover:text-white transition"
+                                                title="Excluir"
+                                                x-data
+                                                x-on:click="$dispatch('open-delete-modal', { action: '{{ route('admin.admins.destroy', $admin) }}', name: '{{ addslashes($admin->nome) }}' })"
+                                            >
+                                                <i class="bi bi-trash text-lg"></i>
+                                            </button>
                                         @else
                                             <span class="text-white/20 cursor-not-allowed" title="Você não tem permissão para gerenciar este admin"><i class="bi bi-lock-fill"></i></span>
                                         @endif
@@ -91,4 +93,5 @@
             </div>
         </div>
     </section>
+    <x-delete-modal />
 </x-layouts.lootbay>

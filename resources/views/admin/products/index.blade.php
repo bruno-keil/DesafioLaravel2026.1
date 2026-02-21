@@ -51,13 +51,15 @@
                                         <a href="{{ route('products.edit', $product) }}" class="text-blue-400 hover:text-white transition" title="Editar">
                                             <i class="bi bi-pencil-square text-lg"></i>
                                         </a>
-                                        <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('ADMINISTRADOR: Tem certeza que deseja excluir este produto?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-400 hover:text-white transition" title="Excluir">
-                                                <i class="bi bi-trash text-lg"></i>
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            class="text-red-400 hover:text-white transition"
+                                            title="Excluir"
+                                            x-data
+                                            x-on:click="$dispatch('open-delete-modal', { action: '{{ route('products.destroy', $product) }}', name: '{{ addslashes($product->nome) }}' })"
+                                        >
+                                            <i class="bi bi-trash text-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,4 +72,5 @@
             </div>
         </div>
     </section>
+    <x-delete-modal />
 </x-layouts.lootbay>

@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=bebas-neue:400|manrope:300,400,500,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-    @vite(['resources/css/app.css', 'resources/ts/welcome.ts'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/ts/welcome.ts'])
 
     {{ $head ?? '' }}
 </head>

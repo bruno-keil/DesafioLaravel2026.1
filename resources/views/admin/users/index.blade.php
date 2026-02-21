@@ -48,13 +48,15 @@
                                         <a href="{{ route('admin.users.edit', $user) }}" class="text-blue-400 hover:text-white transition" title="Editar">
                                             <i class="bi bi-pencil-square text-lg"></i>
                                         </a>
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-400 hover:text-white transition" title="Excluir">
-                                                <i class="bi bi-trash text-lg"></i>
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            class="text-red-400 hover:text-white transition"
+                                            title="Excluir"
+                                            x-data
+                                            x-on:click="$dispatch('open-delete-modal', { action: '{{ route('admin.users.destroy', $user) }}', name: '{{ addslashes($user->nome) }}' })"
+                                        >
+                                            <i class="bi bi-trash text-lg"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,4 +72,5 @@
             </div>
         </div>
     </section>
+    <x-delete-modal />
 </x-layouts.lootbay>

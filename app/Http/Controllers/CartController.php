@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -9,14 +10,31 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = session()->get('cart', []);
-        $items = array_values($cart);
+        $user = auth()->user();
+        $cartItems = CartItem::with('product.category')
+            ->where('user_id', $user->id)
+            ->get();
+
+        $items = $cartItems->map(function (CartItem $cartItem) {
+            $product = $cartItem->product;
+            $photo = get_product_photo($product);
+
+            return [
+                'product_id' => $product->id,
+                'name' => $product->nome,
+                'price' => (float) $product->preco,
+                'quantity' => $cartItem->quantidade,
+                'stock' => (int) ($product->quantidade ?? 0),
+                'photo' => $photo,
+                'category' => $product->category?->nome ?? 'Loot',
+            ];
+        })->values()->all();
+
         $subtotal = collect($items)->sum(fn ($item) => $item['price'] * $item['quantity']);
 
-        $user = auth()->user();
-        $isAuthenticated = (bool) $user;
-        $authUserName = $user?->nome ?? 'Usuario';
-        $cartCount = array_sum(array_column($cart, 'quantity'));
+        $isAuthenticated = true;
+        $authUserName = $user->nome ?? 'Usuario';
+        $cartCount = array_sum(array_column($items, 'quantity'));
 
         return view('cart.index', compact(
             'items',
@@ -35,39 +53,35 @@ class CartController extends Controller
         }
 
         $quantity = max(1, (int) $request->input('quantity', 1));
-        $cart = session()->get('cart', []);
-        $currentQty = (int) ($cart[$product->id]['quantity'] ?? 0);
+        $user = auth()->user();
+
+        $cartItem = CartItem::where('user_id', $user->id)
+            ->where('produto_id', $product->id)
+            ->first();
+
+        $currentQty = $cartItem?->quantidade ?? 0;
         $newQty = min($stock, $currentQty + $quantity);
 
         if ($newQty < $currentQty + $quantity) {
             session()->flash('notice', 'Quantidade ajustada para o limite de estoque.');
         }
 
-        $photo = null;
-        if ($product->foto) {
-            $photo = str_starts_with($product->foto, 'http') ? $product->foto : asset($product->foto);
-        }
-        $photo = $photo ?? 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80';
-
-        $cart[$product->id] = [
-            'product_id' => $product->id,
-            'name' => $product->nome,
-            'price' => (float) $product->preco,
-            'quantity' => $newQty,
-            'stock' => $stock,
-            'photo' => $photo,
-            'category' => $product->category?->nome ?? 'Loot',
-        ];
-
-        session()->put('cart', $cart);
+        CartItem::updateOrCreate(
+            ['user_id' => $user->id, 'produto_id' => $product->id],
+            ['quantidade' => $newQty]
+        );
 
         return redirect()->route('cart.index')->with('success', 'Item adicionado ao carrinho.');
     }
 
     public function update(Request $request, Product $product)
     {
-        $cart = session()->get('cart', []);
-        if (! isset($cart[$product->id])) {
+        $user = auth()->user();
+        $cartItem = CartItem::where('user_id', $user->id)
+            ->where('produto_id', $product->id)
+            ->first();
+
+        if (! $cartItem) {
             return redirect()->route('cart.index');
         }
 
@@ -80,24 +94,22 @@ class CartController extends Controller
         }
 
         if ($stock < 1) {
-            unset($cart[$product->id]);
-            session()->put('cart', $cart);
+            $cartItem->delete();
 
             return redirect()->route('cart.index')->with('error', 'Este item ficou indisponivel e foi removido.');
         }
 
-        $cart[$product->id]['quantity'] = $newQty;
-        $cart[$product->id]['stock'] = $stock;
-        session()->put('cart', $cart);
+        $cartItem->update(['quantidade' => $newQty]);
 
         return redirect()->route('cart.index')->with('success', 'Carrinho atualizado.');
     }
 
     public function remove(Product $product)
     {
-        $cart = session()->get('cart', []);
-        unset($cart[$product->id]);
-        session()->put('cart', $cart);
+        $user = auth()->user();
+        CartItem::where('user_id', $user->id)
+            ->where('produto_id', $product->id)
+            ->delete();
 
         return redirect()->route('cart.index')->with('success', 'Item removido do carrinho.');
     }

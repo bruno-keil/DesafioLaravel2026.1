@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -29,9 +30,11 @@ it('adds a product to the cart', function () {
         ->assertRedirect(route('cart.index'))
         ->assertSessionHas('success');
 
-    $cart = session('cart');
-    expect($cart)->toHaveKey($product->id);
-    expect($cart[$product->id]['quantity'])->toBe(2);
+    $cartItem = CartItem::where('user_id', $this->user->id)
+        ->where('produto_id', $product->id)
+        ->first();
+    expect($cartItem)->not->toBeNull();
+    expect($cartItem->quantidade)->toBe(2);
 });
 
 it('caps quantity at stock level', function () {
@@ -40,8 +43,10 @@ it('caps quantity at stock level', function () {
     $this->post(route('cart.add', $product), ['quantity' => 10])
         ->assertRedirect(route('cart.index'));
 
-    $cart = session('cart');
-    expect($cart[$product->id]['quantity'])->toBe(3);
+    $cartItem = CartItem::where('user_id', $this->user->id)
+        ->where('produto_id', $product->id)
+        ->first();
+    expect($cartItem->quantidade)->toBe(3);
 });
 
 it('rejects adding out-of-stock item', function () {
@@ -55,63 +60,48 @@ it('rejects adding out-of-stock item', function () {
 it('updates cart item quantity', function () {
     $product = Product::factory()->create(['quantidade' => 10]);
 
-    session(['cart' => [
-        $product->id => [
-            'product_id' => $product->id,
-            'name' => $product->nome,
-            'price' => (float) $product->preco,
-            'quantity' => 2,
-            'stock' => 10,
-            'photo' => null,
-            'category' => 'Test',
-        ],
-    ]]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 2,
+    ]);
 
     $this->patch(route('cart.update', $product), ['quantity' => 5])
         ->assertRedirect(route('cart.index'));
 
-    expect(session('cart')[$product->id]['quantity'])->toBe(5);
+    $cartItem = CartItem::where('user_id', $this->user->id)
+        ->where('produto_id', $product->id)
+        ->first();
+    expect($cartItem->quantidade)->toBe(5);
 });
 
 it('removes an item from the cart', function () {
     $product = Product::factory()->create();
 
-    session(['cart' => [
-        $product->id => [
-            'product_id' => $product->id,
-            'name' => $product->nome,
-            'price' => (float) $product->preco,
-            'quantity' => 1,
-            'stock' => 10,
-            'photo' => null,
-            'category' => 'Test',
-        ],
-    ]]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 1,
+    ]);
 
     $this->delete(route('cart.remove', $product))
         ->assertRedirect(route('cart.index'));
 
-    expect(session('cart'))->not->toHaveKey($product->id);
+    expect(CartItem::where('user_id', $this->user->id)->where('produto_id', $product->id)->exists())->toBeFalse();
 });
 
 it('removes item if stock becomes zero on update', function () {
     $product = Product::factory()->create(['quantidade' => 0]);
 
-    session(['cart' => [
-        $product->id => [
-            'product_id' => $product->id,
-            'name' => $product->nome,
-            'price' => (float) $product->preco,
-            'quantity' => 2,
-            'stock' => 5,
-            'photo' => null,
-            'category' => 'Test',
-        ],
-    ]]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 2,
+    ]);
 
     $this->patch(route('cart.update', $product), ['quantity' => 1])
         ->assertRedirect(route('cart.index'))
         ->assertSessionHas('error');
 
-    expect(session('cart'))->not->toHaveKey($product->id);
+    expect(CartItem::where('user_id', $this->user->id)->where('produto_id', $product->id)->exists())->toBeFalse();
 });

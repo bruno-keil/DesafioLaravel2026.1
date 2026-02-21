@@ -116,8 +116,7 @@ class HomeController extends Controller
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
         $authUserName = $user?->nome ?? 'Usuario';
-        $cart = session()->get('cart', []);
-        $cartCount = array_sum(array_column($cart, 'quantity'));
+        $cartCount = $user ? \App\Models\CartItem::where('user_id', $user->id)->sum('quantidade') : 0;
 
         return view('welcome', compact(
             'products',

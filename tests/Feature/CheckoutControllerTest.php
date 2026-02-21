@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Address;
+use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -26,17 +27,12 @@ it('redirects to cart when cart is empty', function () {
 });
 
 it('shows checkout address page when cart has items', function () {
-    session(['cart' => [
-        1 => [
-            'product_id' => 1,
-            'name' => 'Test',
-            'price' => 50.00,
-            'quantity' => 2,
-            'stock' => 10,
-            'photo' => null,
-            'category' => 'Cat',
-        ],
-    ]]);
+    $product = Product::factory()->create(['quantidade' => 10]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 2,
+    ]);
 
     $this->get(route('checkout.address'))
         ->assertOk()
@@ -44,9 +40,12 @@ it('shows checkout address page when cart has items', function () {
 });
 
 it('saves a new address from checkout', function () {
-    session(['cart' => [
-        1 => ['product_id' => 1, 'name' => 'X', 'price' => 10, 'quantity' => 1, 'stock' => 5, 'photo' => null, 'category' => 'C'],
-    ]]);
+    $product = Product::factory()->create(['quantidade' => 5]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 1,
+    ]);
 
     $data = [
         'nome' => 'Casa',
@@ -162,6 +161,11 @@ it('creates a transaction and redirects to PagSeguro on successful checkout', fu
     ]);
 
     session(['cart' => ['something']]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 2,
+    ]);
 
     $items = json_encode([
         [
@@ -190,7 +194,7 @@ it('creates a transaction and redirects to PagSeguro on successful checkout', fu
 
     expect($product->fresh()->quantidade)->toBe(8);
     expect($seller->fresh()->saldo)->toEqual('200.00');
-    expect(session('cart'))->toBeNull();
+    expect(CartItem::where('user_id', $this->user->id)->count())->toBe(0);
 });
 
 it('creates transaction items for multiple products', function () {
@@ -240,7 +244,7 @@ it('creates transaction items for multiple products', function () {
     expect($seller2->fresh()->saldo)->toEqual('150.00');
 });
 
-it('clears the cart session after successful checkout', function () {
+it('clears the cart after successful checkout', function () {
     $product = Product::factory()->create(['quantidade' => 10, 'preco' => 25.00]);
 
     Http::fake([
@@ -252,7 +256,11 @@ it('clears the cart session after successful checkout', function () {
         ], 200),
     ]);
 
-    session(['cart' => ['item']]);
+    CartItem::create([
+        'user_id' => $this->user->id,
+        'produto_id' => $product->id,
+        'quantidade' => 1,
+    ]);
 
     $items = json_encode([
         ['product_id' => $product->id, 'name' => 'Test', 'price' => 25.00, 'quantity' => 1],
@@ -260,7 +268,7 @@ it('clears the cart session after successful checkout', function () {
 
     $this->post(route('checkout.create'), ['items' => $items]);
 
-    expect(session('cart'))->toBeNull();
+    expect(CartItem::where('user_id', $this->user->id)->count())->toBe(0);
 });
 
 it('sends correct payload to PagSeguro API', function () {

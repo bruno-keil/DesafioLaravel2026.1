@@ -31,8 +31,7 @@ class ProductController extends Controller
         $user = auth()->user();
         $isAuthenticated = (bool) $user;
         $authUserName = $user?->nome ?? 'Usuario';
-        $cart = session()->get('cart', []);
-        $cartCount = array_sum(array_column($cart, 'quantity'));
+        $cartCount = $user ? \App\Models\CartItem::where('user_id', $user->id)->sum('quantidade') : 0;
 
         return view('products.index', compact(
             'products',
@@ -58,8 +57,7 @@ class ProductController extends Controller
         $canPurchase = $isAuthenticated && !$isAdmin && $product->user_id !== $user->id && (int) $product->quantidade > 0;
         
         $showAdminNote = $isAuthenticated && $isAdmin;
-        $cart = session()->get('cart', []);
-        $cartCount = array_sum(array_column($cart, 'quantity'));
+        $cartCount = $user ? \App\Models\CartItem::where('user_id', $user->id)->sum('quantidade') : 0;
 
         return view('products.show', compact(
             'product',

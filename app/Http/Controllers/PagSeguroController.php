@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
@@ -58,7 +59,7 @@ class PagSeguroController extends Controller
                 }
             });
 
-            session()->forget('cart');
+            CartItem::where('user_id', $request->user()->id)->delete();
 
             $paymentLink = data_get($response->json(), 'links.1.href');
             return redirect()->away($paymentLink);

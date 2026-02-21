@@ -2,22 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Address;
+use App\Models\CartItem;
+use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
     public function address()
     {
-        $cart = session()->get('cart', []);
-        
-        if (empty($cart)) {
+        $user = auth()->user();
+        $cartItems = CartItem::with('product.category')
+            ->where('user_id', $user->id)
+            ->get();
+
+        if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Seu carrinho está vazio.');
         }
 
-        $items = array_values($cart);
+        $items = $cartItems->map(function (CartItem $cartItem) {
+            $product = $cartItem->product;
+            return [
+                'product_id' => $product->id,
+                'name' => $product->nome,
+                'price' => (float) $product->preco,
+                'quantity' => $cartItem->quantidade,
+                'stock' => (int) ($product->quantidade ?? 0),
+                'photo' => get_product_photo($product),
+                'category' => $product->category?->nome ?? 'Loot',
+            ];
+        })->values()->all();
+
         $subtotal = collect($items)->sum(fn ($item) => $item['price'] * $item['quantity']);
-        $user = auth()->user();
         
         $addresses = $user->addresses()->orderByDesc('is_default')->get();
         $address = $user->defaultAddress();

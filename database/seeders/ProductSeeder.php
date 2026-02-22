@@ -23,18 +23,29 @@ class ProductSeeder extends Seeder
         if ($testUser) {
             Product::factory()
                 ->count(5)
-                ->create([
-                    'user_id' => $testUser->id,
-                    'categoria_id' => $categories->random()->id,
-                ]);
+                ->sequence(function ($sequence) use ($testUser, $categories) {
+                    $date = now()->subDays(rand(0, 90));
+                    
+                    return [
+                        'user_id' => $testUser->id,
+                        'categoria_id' => $categories->random()->id,
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                    ];
+                })
+                ->create();
         }
 
         Product::factory()
             ->count(31)
             ->sequence(function ($sequence) use ($users, $categories) {
+                $date = now()->subDays(rand(0, 90));
+                
                 return [
                     'user_id' => $users->random()->id,
                     'categoria_id' => $categories->random()->id,
+                    'created_at' => $date,
+                    'updated_at' => $date,
                 ];
             })
             ->create();
